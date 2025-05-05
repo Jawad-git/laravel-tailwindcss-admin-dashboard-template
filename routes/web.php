@@ -80,15 +80,7 @@ Route::get('/dashboard/analytics', function () {
 Route::get('/dashboard/fintech', function () {
     Log::info('fintech page loaded');
 })->name('fintech');
-Route::get('/ecommerce/customers', function () {
-    Log::info('customers page loaded');
-})->name('customers');
-Route::get('/ecommerce/orders', function () {
-    Log::info('orders page loaded');
-})->name('orders');
-Route::get('/ecommerce/invoices', function () {
-    Log::info('invoices page loaded');
-})->name('invoices');
+
 Route::get('sign-in', action: Login::class)->name('login');
 Route::get('sign-up', action: Register::class)->name('register');
 Route::get('restaurant', action: Login::class)->name('restaurant');
@@ -130,17 +122,6 @@ Route::get('/utility/changelog', function () {
     Log::info('Changelog page loaded');
 })->name('changelog');
 
-//    Route::fallback(function () {
-//        return view('pages/utility/404');
-//    });
-//});
-
-
-// Route::group(['prefix' => 'roles'], function () {
-//     Route::get('/', RoleView::class)->name('roles');
-//     Route::get('/add', RoleAdd::class)->name('add-role');
-//     Route::get('/edit/{id}', RoleEdit::class)->name('edit-role');
-// });
 
 Route::group(['prefix' => 'users'], function () {
 
