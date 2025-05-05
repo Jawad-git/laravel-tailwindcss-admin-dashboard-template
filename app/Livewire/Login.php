@@ -20,7 +20,7 @@ class Login extends Component
     public function render()
     {
         // ignore the layout error shout
-        return view('livewire.login');
+        return view('livewire.login')->layout('layouts.authentication');
     }
     public function mount() {}
 
@@ -28,7 +28,6 @@ class Login extends Component
     {
         $attributes = $this->validate();
 
-        dd($attributes);
         $user = User::where('email', $attributes['email'])->first();
 
         if (!$user || !Hash::check($attributes['password'], $user->password)) {

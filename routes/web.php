@@ -14,6 +14,8 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +57,19 @@ Route::get('/ecommerce/invoices', function () {
 })->name('invoices');
 Route::get('sign-in', action: Login::class)->name('login');
 Route::get('sign-up', action: Register::class)->name('register');
+Route::get('users/roles', action: Login::class)->name('roles');
+Route::get('users/admins', action: Login::class)->name('admins');
+Route::get('accomodation/roles', action: Login::class)->name('rooms');
+Route::get('accomodation/rooms/categories', action: Login::class)->name('categories');
+Route::get('accomodation/rooms/amenities', action: Login::class)->name('amenities');
+
+Route::get('locale/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ar', 'fa'])) { // Add your supported locales here
+        session::put(['locale' => $locale]);
+        Log::info("the locale is: $locale");
+    }
+    return redirect()->back();
+})->name('locale.switch');
 
 
 

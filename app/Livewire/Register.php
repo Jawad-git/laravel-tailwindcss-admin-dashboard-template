@@ -5,6 +5,8 @@ namespace App\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 
 class Register extends Component
@@ -30,6 +32,7 @@ class Register extends Component
     public function store()
     {
         $attributes = $this->validate();
+        $attributes['password'] = Hash::make($attributes['password']);
         $user = User::create($attributes);
         Auth::login($user);
         return redirect('/dashboard');

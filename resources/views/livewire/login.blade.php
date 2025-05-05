@@ -26,6 +26,13 @@
                         </div>
                     </form>
                 </div>
+                <div class="card-footer text-start mt-2 pt-0 px-lg-2 px-1">
+                    <p class="mb-2 text-sm mx-auto">
+                        {{ __('auth.dont_have_an_account') }}
+                        <a href="{{ route('register') }}"
+                            class="text-primary text-gradient font-weight-bold">{{ __('auth.sign_up') }}</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

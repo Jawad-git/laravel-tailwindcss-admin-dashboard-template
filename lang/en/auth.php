@@ -16,7 +16,7 @@ return [
     // Registration & Login
     'sign_up' => 'Sign Up',
     'sign_in' => 'Sign In',
-    'login' => 'Login',
+    'login' => 'Log in',
     'cancel' => 'Cancel',
     'already_have_an_account' => 'Already have an account?',
     'dont_have_an_account' => "Don't have an account?",
