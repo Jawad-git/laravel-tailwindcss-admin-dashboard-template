@@ -13,10 +13,14 @@ return [
     |
     */
 
+    // Dashboard and headers 
     'languages' => 'Languages',
     'english' => 'English',
     'farsi' => 'Farsi',
     'arabic' => 'Arabic',
-    'users' => 'Users'
-
+    'users' => 'Users',
+    'restaurant' => 'Restaurant',
+    'swimming_pool' => 'Swimming Pool',
+    'about_us' => 'About Us',
+    'social_media' => 'Social Media'
 ];
