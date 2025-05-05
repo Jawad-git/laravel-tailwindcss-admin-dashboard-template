@@ -3,6 +3,40 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
 use App\Livewire\Login;
+
+use App\Livewire\AdminView;
+use App\Livewire\AdminAdd;
+use App\Livewire\AdminEdit;
+
+use App\Livewire\RoleView;
+use App\Livewire\RoleAdd;
+use App\Livewire\RoleEdit;
+
+use App\Livewire\AmenityView;
+use App\Livewire\AmenityAdd;
+use App\Livewire\AmenityEdit;
+
+use App\Livewire\CategoryView;
+use App\Livewire\CategoryAdd;
+use App\Livewire\CategoryEdit;
+
+use App\Livewire\RoomView;
+use App\Livewire\RoomAdd;
+use App\Livewire\RoomEdit;
+
+use App\Livewire\RestaurantView;
+use App\Livewire\RestaurantAdd;
+use App\Livewire\RestaurantEdit;
+
+use App\Livewire\MenuView;
+use App\Livewire\MenuAdd;
+use App\Livewire\MenuEdit;
+
+use App\Livewire\AboutUs;
+use App\Livewire\SocialMedia;
+use App\Livewire\SwimmingPool;
+
+
 use App\Livewire\Register;
 use App\Livewire\Dashboard;
 use App\Http\Controllers\DashboardController;
@@ -57,15 +91,12 @@ Route::get('/ecommerce/invoices', function () {
 })->name('invoices');
 Route::get('sign-in', action: Login::class)->name('login');
 Route::get('sign-up', action: Register::class)->name('register');
-Route::get('users/roles', action: Login::class)->name('roles');
-Route::get('users/admins', action: Login::class)->name('admins');
-Route::get('accomodation/roles', action: Login::class)->name('rooms');
-Route::get('accomodation/rooms/categories', action: Login::class)->name('categories');
-Route::get('accomodation/rooms/amenities', action: Login::class)->name('amenities');
 Route::get('restaurant', action: Login::class)->name('restaurant');
-Route::get('pool', action: Login::class)->name('pool');
-Route::get('about-us', action: Login::class)->name('about');
-Route::get('social-media', action: Login::class)->name('socials');
+
+
+Route::get('pool', action: SwimmingPool::class)->name('pool');
+Route::get('about-us', action: AboutUs::class)->name('about');
+Route::get('social-media', action: SocialMedia::class)->name('socials');
 
 
 
@@ -103,3 +134,51 @@ Route::get('/utility/changelog', function () {
 //        return view('pages/utility/404');
 //    });
 //});
+
+
+// Route::group(['prefix' => 'roles'], function () {
+//     Route::get('/', RoleView::class)->name('roles');
+//     Route::get('/add', RoleAdd::class)->name('add-role');
+//     Route::get('/edit/{id}', RoleEdit::class)->name('edit-role');
+// });
+
+Route::group(['prefix' => 'users'], function () {
+
+    // users/admins/
+    Route::group(['prefix' => 'admins'], function () {
+        Route::get('/', AdminView::class)->name('admins');
+        Route::get('/add', AdminAdd::class)->name('add-admin');
+        Route::get('/edit/{id}', AdminEdit::class)->name('edit-admin');
+    });
+
+    // users/roles/
+    Route::group(['prefix' => 'roles'], function () {
+        Route::get('/', RoleView::class)->name('roles');
+        Route::get('/add', RoleAdd::class)->name('add-role');
+        Route::get('/edit/{id}', RoleEdit::class)->name('edit-role');
+    });
+});
+
+Route::group(['prefix' => 'accomodation'], function () {
+
+    // accomodation/rooms/
+    Route::group(['prefix' => 'rooms'], function () {
+        Route::get('/', RoomView::class)->name('rooms');
+        Route::get('/add', RoomAdd::class)->name('add-room');
+        Route::get('/edit/{id}', RoomEdit::class)->name('edit-room');
+    });
+
+    // accomodation/categories/
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/', CategoryView::class)->name('categories');
+        Route::get('/add', CategoryAdd::class)->name('add-category');
+        Route::get('/edit/{id}', CategoryEdit::class)->name('edit-category');
+    });
+
+    // accomodation/amenities/
+    Route::group(['prefix' => 'amenities'], function () {
+        Route::get('/', AmenityView::class)->name('amenities');
+        Route::get('/add', AmenityAdd::class)->name('add-amenity');
+        Route::get('/edit/{id}', AmenityEdit::class)->name('edit-amenity');
+    });
+});
