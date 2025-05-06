@@ -15,8 +15,4 @@ class RoomCategory extends Model
         return $this->hasMany(Room::class);
     }
 
-    public function amenities(): BelongsToMany
-    {
-        return $this->belongsToMany(GeneralAmenity::class, "general_amenity_room_categories");
-    }
 }

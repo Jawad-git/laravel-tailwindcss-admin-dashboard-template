@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->foreignId('phone_code')->nullable()->constrained('countries')->onDelete('cascade');
             $table->string('password');
             $table->rememberToken();
             $table->boolean('status')->default(1)->nullable();

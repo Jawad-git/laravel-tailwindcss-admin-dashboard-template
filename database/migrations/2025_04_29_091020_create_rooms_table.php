@@ -16,8 +16,11 @@ return new class extends Migration
             $table->foreignId('room_category_id')->constrained();
             $table->string('name')->nullable();
             $table->string('code')->nullable();
-            $table->integer('Story')->nullable();
-            $table->boolean('isAvailable');
+            $table->integer('floor')->nullable();
+            $table->enum('status', ['available', 'occupied', 'maintenance', 'out of service']);
+            $table->string('view', 72);
+            $table->string('description', 72);
+            $table->string('area');
             $table->dateTime('OccupationStartDate')->nullable();
             $table->dateTime('OccupationEndDate')->nullable();
             $table->timestamps();

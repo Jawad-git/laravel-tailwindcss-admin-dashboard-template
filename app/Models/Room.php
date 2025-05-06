@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use OwenIt\Auditing\Auditable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 
 class Room extends Model implements AuditableContract
 {
@@ -18,5 +20,10 @@ class Room extends Model implements AuditableContract
     public function category()
     {
         return $this->belongsTo(RoomCategory::class, 'room_category_id');
+    }
+
+    public function amenities(): BelongsToMany
+    {
+        return $this->belongsToMany(GeneralAmenity::class, "general_amenity_room_categories");
     }
 }

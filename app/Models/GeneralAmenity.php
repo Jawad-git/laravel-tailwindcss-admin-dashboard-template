@@ -12,6 +12,6 @@ class GeneralAmenity extends Model implements AuditableContract
     use Auditable;
     public function roomCategories(): BelongsToMany
     {
-        return $this->belongsToMany(RoomCategory::class, "general_amenity_room_categories");
+        return $this->belongsToMany(Room::class, "room_amenity");
     }
 }
