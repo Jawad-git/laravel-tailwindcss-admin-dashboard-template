@@ -1,2 +1,0 @@
-<div>
-    GANAG</div>

@@ -2,27 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
-use App\Livewire\Login;
+use App\Livewire\auth\Login;
 
-use App\Livewire\AdminView;
-use App\Livewire\AdminAdd;
-use App\Livewire\AdminEdit;
+use App\Livewire\admins\AdminView;
+use App\Livewire\admins\AdminAdd;
+use App\Livewire\admins\AdminEdit;
 
-use App\Livewire\RoleView;
-use App\Livewire\RoleAdd;
-use App\Livewire\RoleEdit;
+use App\Livewire\roles\RoleView;
+use App\Livewire\roles\RoleAdd;
+use App\Livewire\roles\RoleEdit;
 
-use App\Livewire\AmenityView;
-use App\Livewire\AmenityAdd;
-use App\Livewire\AmenityEdit;
+use App\Livewire\amenities\AmenityView;
+use App\Livewire\amenities\AmenityAdd;
+use App\Livewire\amenities\AmenityEdit;
 
-use App\Livewire\CategoryView;
-use App\Livewire\CategoryAdd;
-use App\Livewire\CategoryEdit;
+use App\Livewire\roomCategories\CategoryView;
+use App\Livewire\roomCategories\CategoryAdd;
+use App\Livewire\roomCategories\CategoryEdit;
 
-use App\Livewire\RoomView;
-use App\Livewire\RoomAdd;
-use App\Livewire\RoomEdit;
+use App\Livewire\rooms\RoomView;
+use App\Livewire\rooms\RoomAdd;
+use App\Livewire\rooms\RoomEdit;
 
 use App\Livewire\RestaurantView;
 use App\Livewire\RestaurantAdd;
@@ -37,7 +37,7 @@ use App\Livewire\SocialMedia;
 use App\Livewire\SwimmingPool;
 
 
-use App\Livewire\Register;
+use App\Livewire\auth\Register;
 use App\Livewire\Dashboard;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerController;

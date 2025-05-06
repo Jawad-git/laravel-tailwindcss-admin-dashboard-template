@@ -15,10 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('phone_code')->nullable()->constrained('countries')->onDelete('cascade');
+            $table->string('city_id')->nullable();
+            $table->string('address')->nullable();
             $table->string('password');
+            $table->string('phone')->nullable();
             $table->rememberToken();
+            $table->date('expiry_date')->nullable();
             $table->boolean('status')->default(1)->nullable();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();

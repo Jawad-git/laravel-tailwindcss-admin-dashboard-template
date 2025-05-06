@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use OwenIt\Auditing\Auditable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements AuditableContract
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable implements AuditableContract
     use Notifiable;
     use TwoFactorAuthenticatable;
     use Auditable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +54,11 @@ class User extends Authenticatable implements AuditableContract
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function country()
+    {
+        return $this->hasOne(Country::class, 'phone_code', 'id');
+    }
 
     /**
      * The accessors to append to the model's array form.
