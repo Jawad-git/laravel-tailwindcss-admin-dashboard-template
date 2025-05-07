@@ -85,18 +85,17 @@ class AdminAdd extends Component
         DB::beginTransaction();
 
         try {
-            // if ($this->path) {
+            if ($this->path) {
 
-            //     $path = MediaManagementService::uploadMedia(
-            //         $this->path,
-            //         '/admins',
-            //         env('FILESYSTEM_DRIVER'),
-            //         explode('.', $this->path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $this->path->getClientOriginalExtension()
-            //     );
-            // } else {
-            //     $path = null;
-            // }
-            $path = null;
+                $path = MediaManagementService::uploadMedia(
+                    $this->path,
+                    '/admins',
+                    env('FILESYSTEM_DRIVER'),
+                    explode('.', $this->path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $this->path->getClientOriginalExtension()
+                );
+            } else {
+                $path = null;
+            }
             $user = new User();
             $user->name = $validatedData['name'];
             $user->phone = $validatedData['phone'];

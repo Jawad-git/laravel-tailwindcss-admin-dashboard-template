@@ -48,6 +48,7 @@ function confirmDelete(id) {
     // })
     .then((result) => {
       if (result.isConfirmed) {
+        console.log("tap");
         Livewire.dispatch("destroy", { id: id });
       }
     });

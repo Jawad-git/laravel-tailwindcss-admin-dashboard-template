@@ -40,7 +40,7 @@ class AdminEdit extends Component
         $this->user = User::find($id);
 
         $this->authorize('admin-edit');
-        //$this->authorize('edit', $this->user);
+        $this->authorize('edit', $this->user);
 
         $this->roles = Role::pluck('name', 'id')->all();
         $this->name = $this->user->name;
@@ -97,21 +97,19 @@ class AdminEdit extends Component
         DB::beginTransaction();
 
         try {
-            //     if ($this->path) {
-            //         if (!is_string($this->path)) {
-            //             $path = MediaManagementService::checkDeleteUpload(
-            //                 $this->path,
-            //                 $this->path,
-            //                 '/admins',
-            //                 env('FILESYSTEM_DRIVER'),
-            //                 explode('.', $this->path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $this->path->getClientOriginalExtension()
-            //             );
-            //         } else {
-            //             $path = $this->path;
-            //         }
-            // }
-            $path = null;
-
+            if ($this->path) {
+                if (!is_string($this->path)) {
+                    $path = MediaManagementService::checkDeleteUpload(
+                        $this->path,
+                        $this->path,
+                        '/admins',
+                        env('FILESYSTEM_DRIVER'),
+                        explode('.', $this->path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $this->path->getClientOriginalExtension()
+                    );
+                } else {
+                    $path = $this->path;
+                }
+            }
 
             if (isset($validatedData['password'])) {
                 $this->user->password = $validatedData['password'];

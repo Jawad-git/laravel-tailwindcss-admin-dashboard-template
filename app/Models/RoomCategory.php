@@ -15,4 +15,19 @@ class RoomCategory extends Model
         return $this->hasMany(Room::class);
     }
 
+    public function translations()
+    {
+        return $this->morphMany(Translation::class, 'translatable');
+    }
+
+    public function translated($key, $locale = null)
+    {
+        $locale = $locale ?? app()->getLocale();
+
+        return $this->translations()
+            ->where('language_code', $locale)
+            ->where('key', $key)
+            ->value('value');
+    }
+
 }
