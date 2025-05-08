@@ -94,11 +94,25 @@ return [
     'Image' => 'Image',
     'Heading' => 'Heading',
 
-    // CategoryAdd
+    // Categories
 
+    'Add, Edit, Delete' => 'Add, Edit, Delete',
+    'Add New Category' => 'Add New Category',
     'Create Category' => 'Create Category',
     'Categories' => 'Categories',
     'English Name' => 'English',
     'Arabic Name' => 'Arabic',
     'Farsi Name' => 'Farsi',
+    'category created successfully' => 'Category created successfully',
+    'category updated successfully' => 'Category updated successfully',
+
+    // Amenities
+
+    'Add New Amenity' => 'Add New Amenity',
+    'Amenities' => 'Amenities',
+    'Create Amenity' => 'Create Amenity',
+    'amenity created successfully' => 'Amenity created successfully',
+    'amenity updated successfully' => 'Amenity updated successfully',
+
+
 ];

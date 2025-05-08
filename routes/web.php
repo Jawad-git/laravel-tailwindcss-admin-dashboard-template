@@ -159,7 +159,7 @@ Route::group(['prefix' => 'accomodation'], function () {
     // accomodation/amenities/
     Route::group(['prefix' => 'amenities'], function () {
         Route::get('/', AmenityView::class)->name('amenities');
-        Route::get('/add', AmenityAdd::class)->name('add-amenity');
-        Route::get('/edit/{id}', AmenityEdit::class)->name('edit-amenity');
+        Route::get('/add', AmenityAdd::class)->name('amenity-create');
+        Route::get('/edit/{id}', AmenityEdit::class)->name('amenity-edit');
     });
 });

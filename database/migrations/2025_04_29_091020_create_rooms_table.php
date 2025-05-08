@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('room_category_id')->constrained();
-            $table->string('name')->nullable();
-            $table->string('code')->nullable();
+            $table->string('number')->nullable();
             $table->integer('floor')->nullable();
+            $table->integer('capacity')->nullable();
+            $table->integer('bed_count')->nullable();
+            $table->integer('price_per_night')->nullable();
             $table->enum('status', ['available', 'occupied', 'maintenance', 'out of service']);
             $table->string('view', 72);
             $table->string('description', 72);
-            $table->string('area');
+            $table->string('size');
             $table->dateTime('OccupationStartDate')->nullable();
             $table->dateTime('OccupationEndDate')->nullable();
             $table->timestamps();

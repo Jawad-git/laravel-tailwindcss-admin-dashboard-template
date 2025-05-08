@@ -36,6 +36,7 @@ class CategoryEdit extends Component
         foreach ($this->languages['data'] as $lang) {
             $name = Translation::where('model_id', $id)
                 ->where('language_id', $lang['id'])
+                ->where('model_type', RoomCategory::class)
                 ->first();
             $this->name["name_" . $lang['code']] = $name ? $name->name : '';
         }

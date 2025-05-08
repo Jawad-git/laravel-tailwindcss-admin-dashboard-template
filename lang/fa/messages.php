@@ -93,12 +93,22 @@ return [
     'Image' => 'تصویر',
     'Heading' => 'سرتیتر',
 
-    // CategoryAdd
-
-    'Create Category' => 'ایجاد دسته‌بندی',
-    'Categories' => 'دسته‌بندی‌ها',
+    // Categories
+    'Add, Edit, Delete' => 'افزودن، ویرایش، حذف',
+    'Add New Category' => 'افزودن دسته جدید',
+    'Create Category' => 'ایجاد دسته',
+    'Categories' => 'دسته‌ها',
     'English Name' => 'انگلیسی',
     'Arabic Name' => 'عربی',
     'Farsi Name' => 'فارسی',
+    'category created successfully' => 'دسته با موفقیت ایجاد شد',
+    'category updated successfully' => 'دسته با موفقیت به‌روزرسانی شد',
+
+    // Amenities
+    'Add New Amenity' => 'افزودن امکانات جدید',
+    'Amenities' => 'امکانات',
+    'Create Amenity' => 'ایجاد امکانات',
+    'amenity created successfully' => 'امکانات با موفقیت ایجاد شد',
+    'amenity updated successfully' => 'امکانات با موفقیت به‌روزرسانی شد',
 
 ];

@@ -42,11 +42,11 @@ class CategoryView extends Component
 
             DB::commit();
 
-            return redirect()->route('sections')
+            return redirect()->route('categories')
                 ->with('success', __('messages.section deleted successfully'));
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('sections')
+            return redirect()->route('categories')
                 ->with('error', __('An error occurred while deleting the section.'));
         }
     }

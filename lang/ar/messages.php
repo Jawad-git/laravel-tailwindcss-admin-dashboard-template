@@ -94,10 +94,22 @@ return [
 
     // CategoryAdd
 
+    // Categories
+    'Add, Edit, Delete' => 'إضافة، تعديل، حذف',
+    'Add New Category' => 'إضافة فئة جديدة',
     'Create Category' => 'إنشاء فئة',
     'Categories' => 'الفئات',
     'English Name' => 'الإنجليزية',
     'Arabic Name' => 'العربية',
     'Farsi Name' => 'الفارسية',
+    'category created successfully' => 'تم إنشاء الفئة بنجاح',
+    'category updated successfully' => 'تم تحديث الفئة بنجاح',
+
+    // Amenities
+    'Add New Amenity' => 'إضافة ميزة جديدة',
+    'Amenities' => 'المميزات',
+    'Create Amenity' => 'إنشاء ميزة',
+    'amenity created successfully' => 'تم إنشاء الميزة بنجاح',
+    'amenity updated successfully' => 'تم تحديث الميزة بنجاح',
 
 ];

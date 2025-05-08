@@ -6,7 +6,7 @@
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                             <h6 class="text-white mx-3"><strong> {{ __('messages.Add, Edit, Delete') }}
-                                    {{ __('ui.Sections') }} </strong></h6>
+                                    {{ __('ui.Categories') }} </strong></h6>
                         </div>
                     </div>
 
@@ -33,7 +33,7 @@
                     <div class=" ms-3 my-3 text-start">
                         @can('category-create')
                         <a class="btn bg-gradient-dark mb-0" href="{{ route('category-create') }}">
-                            <i class="material-icons text-sm">add</i> {{ __('messages.Add New Section') }}
+                            <i class="material-icons text-sm">add</i> {{ __('messages.Add New Category') }}
                         </a>
                         @endcan
                     </div>

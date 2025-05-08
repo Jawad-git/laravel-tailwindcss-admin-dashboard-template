@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::create('room_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('price')->nullable();
-            $table->string('direction')->nullable();
             $table->timestamps();
         });
     }
