@@ -93,6 +93,12 @@ return [
     'Image' => 'تصویر',
     'Heading' => 'سرتیتر',
 
+    // CategoryAdd
 
+    'Create Category' => 'ایجاد دسته‌بندی',
+    'Categories' => 'دسته‌بندی‌ها',
+    'English Name' => 'انگلیسی',
+    'Arabic Name' => 'عربی',
+    'Farsi Name' => 'فارسی',
 
 ];

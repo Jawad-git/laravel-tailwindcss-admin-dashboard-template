@@ -1,153 +1,113 @@
-<?php
+<div class="container">
+    <div class="justify-content-center">
+        @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible text-white" role="alert">
+            <span class="text-lg">{{ session('success') }}</span>
+            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+        @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible text-white" role="alert">
+            <span class="text-lg">
+                عفوا!
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </span>
+            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                {{ __('messages.Create Category') }}
+                <span class="float-right mt-3">
+                    <span class="d-flex align-items-center">
+                        <a class="btn bg-gradient-primary"
+                            href="{{ route('categories') }}">{{ __('messages.Categories') }}</a>
+                    </span>
+                </span>
+            </div>
+            <div class="card-body">
+                <form wire:submit.prevent="store">
 
-namespace App\Http\Livewire\Backend\Sections;
+                    @foreach ($languages['data'] as $lang)
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <div class="form-group mt-4">
+                                <label for="name.name_{{ $lang['code'] }}"
+                                    class="form-control-label">{{ __('messages.' . $lang['name'] . ' Name') }}</label>
+                                <div
+                                    class="@error('name.name_' . $lang['code']) border border-danger rounded-3 @enderror">
 
-use App\Models\Sections;
-use App\Models\SectionsDetails;
-use App\Services\LanguageManagementService;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\DB;
-use Livewire\Component;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+                                    <input wire:model="name.name_{{ $lang['code'] }}"
+                                        direction="{{ $lang['direction'] }}" data="{!! $name['name_' . $lang['code']] !!}"
+                                        code="{{ $lang['code'] }}" id="name_{{ $lang['code'] }}" prefix="name"
+                                        class="form-control border border-2 p-2">
+                                </div>
 
-class SectionAdd extends Component
-{
-    use AuthorizesRequests;
+                                @error('name.name_' . $lang['code'])
+                                <div class="text-danger">{{ explode('.', $message)[1] }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    {{--
+<div class="d-flex justify-content-between align-items-center mt-4">
+    <h5 class="m-0">{{ __('messages.Pages') }}</h5>
+                    <button class="btn bg-gradient-primary" wire:click.prevent="addPage">+
+                        {{ __('messages.Add More') }}</button>
+            </div>
 
-    public $languages;
-    public $name;
-    public $pages;
+            <hr>
 
-    protected function rules()
-    {
-        $rules = [
-            'name.*' => 'required|string',
-            'pages' => 'nullable',
-            'pages.*' => 'array',
-        ];
-        foreach ($this->languages['data'] as $lang) {
-            $rules["pages.*.name_{$lang['code']}"] = 'required|string';
-        }
-        return $rules;
-    }
+            @foreach ($pages as $index => $page)
+            <div class="row  mt-3">
+                @foreach ($languages['data'] as $lang)
+                <div class="col-md-5 ">
+                    <label for="pages.{{ $index }}.name_{{ $lang['code'] }}"
+                        class="form-label">
+                        {{ __('messages.' . $lang['name'] . ' Name') }}
+                    </label>
+                    <input type="text"
+                        wire:model="pages.{{ $index }}.name_{{ $lang['code'] }}"
+                        class="form-control border border-2 p-2">
 
-    public function mount()
-    {
-        $this->authorize('roomcategory-create');
-        $this->languages = LanguageManagementService::getLanguages();
-        foreach ($this->languages['data'] as $lang) {
-            $this->name["name_" . $lang['code']] = '';
-        }
-        $this->addPage();
-    }
-    public function removePage($index)
-    {
-        unset($this->pages[$index]);
-        $this->pages = array_values($this->pages);
-    }
-    public function addPage()
-    {
-        $pageEntry = [];
-
-        foreach ($this->languages['data'] as $lang) {
-            $pageEntry["name_" . $lang['code']] = '';
-        }
-
-        $this->pages[] = $pageEntry;
-    }
-
-    public function store()
-    {
-        $this->resetErrorBag();
-
-        $this->dispatch('scrollToElement');
-
-        $validatedData = $this->validate();
-
-        $this->dispatch('saved');
-
-        DB::beginTransaction();
-
-        try {
-
-            $roomCategory = new RoomCategory();
-            $roomCategory->save();
+                    <div class="text-danger">
+                        @error('pages.' . $index . '.name_' . $lang['code'])
+                        {{ $message }}
+                        @enderror
+                    </div>
+                </div>
+                @endforeach
 
 
-            foreach ($this->languages['data'] as $value) {
+                <div class="col-md-1 " style="margin-top: 2.1rem">
+                    <button class="btn btn-danger " style=" font-size: 0.85rem !important; "
+                        wire:click.prevent="removePage({{ $index }})">X</button>
+                </div>
 
-                $category->translations()->create([
-                    'language_code' => $value['code'],
-                    'key' => [''],
-                    'value' => 'Suite de Lujo',
-                ]);
-                $sectionDetail = new SectionsDetails();
-                $sectionDetail->section_id = $section->id;
-                $sectionDetail->language_id = $value['id'];
-                $sectionDetail->name = $validatedData['name']['name_' . $value['code']];
-                $sectionDetail->save();
-            }
-            $permissionName = $validatedData['name']['name_en'] . '-list';
-            $permission = Permission::firstOrCreate(['name' => $permissionName]);
 
-            $roles = Role::whereIn('name', ['Super Admin', 'American Board'])->get();
-            foreach ($roles as $role) {
-                $role->givePermissionTo($permission);
-            }
-            if (empty($this->pages)) {
-                $baseName = $validatedData['name']['name_en'];
-                $permissionActions = ['add', 'edit', 'delete'];
 
-                foreach ($permissionActions as $action) {
-                    $permissionName = "{$baseName}-{$action}";
-                    $permission = Permission::firstOrCreate(['name' => $permissionName]);
 
-                    foreach ($roles as $role) {
-                        $role->givePermissionTo($permission);
-                    }
-                }
-            } else {
+            </div>
+            @endforeach
 
-                foreach ($this->pages as $page) {
-                    $subSection = new Sections();
-                    $subSection->parent_id = $section->id;
-                    $subSection->save();
+            --}}
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
+                    {{ __('messages.Save') }}</button>
+            </div>
 
-                    foreach ($this->languages['data'] as $value) {
-                        $subSectionDetail = new SectionsDetails();
-                        $subSectionDetail->section_id = $subSection->id;
-                        $subSectionDetail->language_id = $value['id'];
-                        $subSectionDetail->name = $page['name_' . $value['code']];
-                        $subSectionDetail->save();
-                    }
-
-                    $baseName = $page['name_en'];
-                    $permissionActions = ['list', 'add', 'edit', 'delete'];
-
-                    foreach ($permissionActions as $action) {
-                        $permissionName = "{$baseName}-{$action}";
-                        $permission = Permission::firstOrCreate(['name' => $permissionName]);
-
-                        foreach ($roles as $role) {
-                            $role->givePermissionTo($permission);
-                        }
-                    }
-                }
-            }
-            DB::commit();
-
-            return redirect()->route('sections')->with('success',  __('messages.section created successfully'));
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $this->dispatch('scrollToElement');
-
-            session()->flash('error', 'An error occurred while creating the Section.');
-        }
-    }
-
-    public function render()
-    {
-        return view('livewire.backend.sections.section-add');
-    }
-}
+            </form>
+        </div>
+    </div>
+</div>
+</div>

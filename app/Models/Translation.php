@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Translation extends Model
 {
-    protected $fillable = ['locale', 'key', 'value'];
+    protected $fillable = ['name', 'model_id', 'model_type', 'language_id'];
 
-    public function translatable()
+    public function model()
     {
         return $this->morphTo();
     }

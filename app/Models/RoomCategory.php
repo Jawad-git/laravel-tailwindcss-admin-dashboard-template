@@ -7,7 +7,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class RoomCategory extends Model
+class RoomCategory extends Model implements AuditableContract
 {
     use Auditable;
     public function rooms()
@@ -17,7 +17,7 @@ class RoomCategory extends Model
 
     public function translations()
     {
-        return $this->morphMany(Translation::class, 'translatable');
+        return $this->morphMany(Translation::class, 'model');
     }
 
     public function translated($key, $locale = null)
@@ -30,4 +30,10 @@ class RoomCategory extends Model
             ->value('value');
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($category) {
+            $category->translations()->delete(); // assuming this is a morphMany
+        });
+    }
 }

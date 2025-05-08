@@ -8,6 +8,6 @@ class AmenityView extends Component
 {
     public function render()
     {
-        return view('livewire.amenity-view');
+        return view('livewire.amenities.amenity-view');
     }
 }

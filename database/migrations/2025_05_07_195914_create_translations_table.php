@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('translations', function (Blueprint $table) {
             $table->id();
-            $table->string('locale', 5);
-            $table->morphs('translatable'); // adds translatable_id and translatable_type
-            $table->string('key');
-            $table->text('value');     
+            $table->unsignedBigInteger('model_id');
+            $table->string('model_type');
+            $table->string('language_id')->nullable()->constrained('languages')->onDelete('cascade');
+            $table->longtext('name')->nullable();
             $table->timestamps();
         });
     }

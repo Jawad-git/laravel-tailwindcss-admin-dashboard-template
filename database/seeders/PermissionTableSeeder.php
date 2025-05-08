@@ -49,20 +49,20 @@ class PermissionTableSeeder extends Seeder
             'restaurant-edit',
             'restaurant-delete',
 
-            'swimming-pool-list',
-            'swimming-pool-create',
-            'swimming-pool-edit',
-            'swimming-pool-delete',
+            'swimmingPool-list',
+            'swimmingPool-create',
+            'swimmingPool-edit',
+            'swimmingPool-delete',
 
-            'about-us-list',
-            'about-us-create',
-            'about-us-edit',
-            'about-us-delete',
+            'aboutUs-list',
+            'aboutUs-create',
+            'aboutUs-edit',
+            'aboutUs-delete',
 
-            'social-media-list',
-            'social-media-create',
-            'social-media-edit',
-            'social-media-delete',
+            'socialMedia-list',
+            'socialMedia-create',
+            'socialMedia-edit',
+            'socialMedia-delete',
 
             'logs-list',
             'logs-delete'

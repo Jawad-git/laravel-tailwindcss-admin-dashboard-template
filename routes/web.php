@@ -152,8 +152,8 @@ Route::group(['prefix' => 'accomodation'], function () {
     // accomodation/categories/
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', CategoryView::class)->name('categories');
-        Route::get('/add', CategoryAdd::class)->name('add-category');
-        Route::get('/edit/{id}', CategoryEdit::class)->name('edit-category');
+        Route::get('/add', CategoryAdd::class)->name('category-create');
+        Route::get('/edit/{id}', CategoryEdit::class)->name('category-edit');
     });
 
     // accomodation/amenities/

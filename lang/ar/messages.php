@@ -92,4 +92,12 @@ return [
     'Image' => 'الصورة',
     'Heading' => 'العنوان الرئيسي',
 
+    // CategoryAdd
+
+    'Create Category' => 'إنشاء فئة',
+    'Categories' => 'الفئات',
+    'English Name' => 'الإنجليزية',
+    'Arabic Name' => 'العربية',
+    'Farsi Name' => 'الفارسية',
+
 ];

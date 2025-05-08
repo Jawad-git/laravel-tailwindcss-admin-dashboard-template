@@ -93,4 +93,12 @@ return [
     'Description' => 'Description',
     'Image' => 'Image',
     'Heading' => 'Heading',
+
+    // CategoryAdd
+
+    'Create Category' => 'Create Category',
+    'Categories' => 'Categories',
+    'English Name' => 'English',
+    'Arabic Name' => 'Arabic',
+    'Farsi Name' => 'Farsi',
 ];
