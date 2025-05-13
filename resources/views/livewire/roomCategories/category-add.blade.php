@@ -59,55 +59,13 @@
                         </div>
                     </div>
                     @endforeach
-                    {{--
-<div class="d-flex justify-content-between align-items-center mt-4">
-    <h5 class="m-0">{{ __('messages.Pages') }}</h5>
-                    <button class="btn bg-gradient-primary" wire:click.prevent="addPage">+
-                        {{ __('messages.Add More') }}</button>
-            </div>
-
-            <hr>
-
-            @foreach ($pages as $index => $page)
-            <div class="row  mt-3">
-                @foreach ($languages['data'] as $lang)
-                <div class="col-md-5 ">
-                    <label for="pages.{{ $index }}.name_{{ $lang['code'] }}"
-                        class="form-label">
-                        {{ __('messages.' . $lang['name'] . ' Name') }}
-                    </label>
-                    <input type="text"
-                        wire:model="pages.{{ $index }}.name_{{ $lang['code'] }}"
-                        class="form-control border border-2 p-2">
-
-                    <div class="text-danger">
-                        @error('pages.' . $index . '.name_' . $lang['code'])
-                        {{ $message }}
-                        @enderror
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
+                            {{ __('messages.Save') }}</button>
                     </div>
-                </div>
-                @endforeach
 
-
-                <div class="col-md-1 " style="margin-top: 2.1rem">
-                    <button class="btn btn-danger " style=" font-size: 0.85rem !important; "
-                        wire:click.prevent="removePage({{ $index }})">X</button>
-                </div>
-
-
-
-
+                </form>
             </div>
-            @endforeach
-
-            --}}
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
-                    {{ __('messages.Save') }}</button>
-            </div>
-
-            </form>
         </div>
     </div>
-</div>
 </div>

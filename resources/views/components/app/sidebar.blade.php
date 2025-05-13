@@ -154,22 +154,49 @@
                         </div>
                     </li>
                     <!-- Restaurant -->
-                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r @if(in_array(Request::segment(1), ['restaurant'])){{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }}@endif">
-                        <a class="block text-gray-800 dark:text-gray-100 truncate transition @if(!in_array(Request::segment(1), ['restaurant'])){{ 'hover:text-gray-900 dark:hover:text-white' }}@endif" href="{{ route('restaurant') }}">
-                            <div class="flex items-center">
-                                <svg class="shrink-0 fill-current @if(in_array(Request::segment(1), ['restaurant'])){{ 'text-violet-500' }}@else{{ 'text-gray-400 dark:text-gray-500' }}@endif" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                    <!-- Fork -->
-                                    <rect x="2" y="2" width="1" height="6" rx="0.4" />
-                                    <rect x="4" y="2" width="1" height="6" rx="0.4" />
-                                    <rect x="3" y="8" width="1" height="6" rx="0.4" />
-                                    <!-- Knife -->
-                                    <rect x="11" y="2" width="1" height="9" rx="0.4" />
-                                    <rect x="12" y="2" width="0.7" height="9" rx="0.3" />
-                                    <rect x="11.3" y="11" width="1.4" height="2" rx="0.5" />
-                                </svg>
-                                <span class="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{ __("messages.restaurant") }}</span>
+                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r @if(in_array(Request::segment(1), ['restaurant'])){{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }}@endif" x-data="{ open: {{ in_array(Request::segment(1), ['restaurant']) ? 1 : 0 }} }">
+                        <a class="block text-gray-800 dark:text-gray-100 truncate transition @if(!in_array(Request::segment(1), ['restaurant'])){{ 'hover:text-gray-900 dark:hover:text-white' }}@endif" href="#0" @click.prevent="open = !open; sidebarExpanded = true">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <svg class="shrink-0 fill-current @if(in_array(Request::segment(1), ['restaurant'])){{ 'text-violet-500' }}@else{{ 'text-gray-400 dark:text-gray-500' }}@endif" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                        <!-- Fork -->
+                                        <rect x="2" y="2" width="1" height="6" rx="0.4" />
+                                        <rect x="4" y="2" width="1" height="6" rx="0.4" />
+                                        <rect x="3" y="8" width="1" height="6" rx="0.4" />
+                                        <!-- Knife -->
+                                        <rect x="11" y="2" width="1" height="9" rx="0.4" />
+                                        <rect x="12" y="2" width="0.7" height="9" rx="0.3" />
+                                        <rect x="11.3" y="11" width="1.4" height="2" rx="0.5" />
+                                    </svg>
+                                    <span class="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{__("messages.Restaurant")}}</span>
+                                </div>
+                                <!-- Icon -->
+                                <div class="flex shrink-0 ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500" :class="open ? 'rotate-180' : 'rotate-0'" viewBox="0 0 12 12">
+                                        <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                                    </svg>
+                                </div>
                             </div>
                         </a>
+                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                            <ul class="pl-8 mt-1 @if(!in_array(Request::segment(1), ['restaurant'])){{ 'hidden' }}@endif" :class="open ? 'block!' : 'hidden'">
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if(Route::is('foods')){{ 'text-violet-500!' }}@endif" href="{{ route('foods') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{__("messages.Manage Foods")}}</span>
+                                    </a>
+                                </li>
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if(Route::is('menus')){{ 'text-violet-500!' }}@endif" href="{{ route('menus') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{__("messages.Manage Menus")}}</span>
+                                    </a>
+                                </li>
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition truncate @if(Route::is('restaurant')){{ 'text-violet-500!' }}@endif" href="{{ route('restaurant') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{__("messages.Manage Restaurant")}}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <!-- Swimming Pool -->
                     <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r @if(in_array(Request::segment(1), ['pool'])){{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }}@endif">

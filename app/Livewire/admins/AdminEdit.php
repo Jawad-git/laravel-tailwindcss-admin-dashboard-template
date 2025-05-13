@@ -30,7 +30,6 @@ class AdminEdit extends Component
     public $countries;
     public $countryIdField;
     public $selectedCountry;
-    public $path;
     protected $listeners = [
         'cardLoaded',
     ];
@@ -48,7 +47,6 @@ class AdminEdit extends Component
         $this->email = $this->user->email;
         $this->address = $this->user->address;
         $this->selectedCountry = $this->user->phone_code;
-        $this->path = $this->user->avatar;
 
         $this->countries = Country::with('flag')->where('status', 1)->orderBy('name')->get()->map(function ($country) {
             return [
@@ -67,10 +65,7 @@ class AdminEdit extends Component
     {
         $this->notBooted = $isBooted;
     }
-    public function removeImage()
-    {
-        $this->path = null;
-    }
+
     public function store()
     {
         //$this->authorize('update', $this->user);
@@ -97,19 +92,6 @@ class AdminEdit extends Component
         DB::beginTransaction();
 
         try {
-            if ($this->path) {
-                if (!is_string($this->path)) {
-                    $path = MediaManagementService::checkDeleteUpload(
-                        $this->path,
-                        $this->path,
-                        '/admins',
-                        env('FILESYSTEM_DRIVER'),
-                        explode('.', $this->path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $this->path->getClientOriginalExtension()
-                    );
-                } else {
-                    $path = $this->path;
-                }
-            }
 
             if (isset($validatedData['password'])) {
                 $this->user->password = $validatedData['password'];
@@ -121,7 +103,6 @@ class AdminEdit extends Component
             $this->user->phone = $validatedData['phone'];
             $this->user->email = $validatedData['email'];
             $this->user->address = $validatedData['address'];
-            $this->user->avatar = $path;
             // $this->user->expiry_date = $validatedData['expiry_date'];
             // }catch  (\Exception $e){
             //     dd($e);

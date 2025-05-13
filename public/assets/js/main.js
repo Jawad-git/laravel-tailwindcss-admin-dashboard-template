@@ -20,7 +20,7 @@ document.addEventListener("livewire:load", function () {
 });
 
 document.addEventListener("livewire:init", function () {
-  Livewire.on("scrollToElement", () => {
+  Livewire.on("", () => {
     $("html, body").animate({ scrollTop: 0 }, "slow");
   });
 });

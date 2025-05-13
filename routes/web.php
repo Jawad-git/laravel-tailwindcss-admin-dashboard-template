@@ -24,13 +24,19 @@ use App\Livewire\rooms\RoomView;
 use App\Livewire\rooms\RoomAdd;
 use App\Livewire\rooms\RoomEdit;
 
+use App\Livewire\restaurant\menus\MenuView;
+use App\Livewire\restaurant\menus\MenuAdd;
+use App\Livewire\restaurant\menus\MenuEdit;
+
+use App\Livewire\restaurant\foods\FoodView;
+use App\Livewire\restaurant\foods\FoodAdd;
+use App\Livewire\restaurant\foods\FoodEdit;
+
 use App\Livewire\RestaurantView;
 use App\Livewire\RestaurantAdd;
 use App\Livewire\RestaurantEdit;
 
-use App\Livewire\MenuView;
-use App\Livewire\MenuAdd;
-use App\Livewire\MenuEdit;
+use App\Livewire\restaurant\RestaurantManagement;
 
 use App\Livewire\AboutUs;
 use App\Livewire\SocialMedia;
@@ -145,8 +151,8 @@ Route::group(['prefix' => 'accomodation'], function () {
     // accomodation/rooms/
     Route::group(['prefix' => 'rooms'], function () {
         Route::get('/', RoomView::class)->name('rooms');
-        Route::get('/add', RoomAdd::class)->name('add-room');
-        Route::get('/edit/{id}', RoomEdit::class)->name('edit-room');
+        Route::get('/add', RoomAdd::class)->name('room-create');
+        Route::get('/edit/{id}', RoomEdit::class)->name('room-edit');
     });
 
     // accomodation/categories/
@@ -161,5 +167,24 @@ Route::group(['prefix' => 'accomodation'], function () {
         Route::get('/', AmenityView::class)->name('amenities');
         Route::get('/add', AmenityAdd::class)->name('amenity-create');
         Route::get('/edit/{id}', AmenityEdit::class)->name('amenity-edit');
+    });
+});
+
+Route::group(['prefix' => 'restaurant'], function () {
+
+    Route::get('/', RestaurantManagement::class)->name('restaurant');
+
+    // restaurant/foods/
+    Route::group(['prefix' => 'foods'], function () {
+        Route::get('/', FoodView::class)->name('foods');
+        Route::get('/add', FoodAdd::class)->name('food-create');
+        Route::get('/edit/{id}', FoodEdit::class)->name('food-edit');
+    });
+
+    // restaurant/menus/
+    Route::group(['prefix' => 'menus'], function () {
+        Route::get('/', MenuView::class)->name('menus');
+        Route::get('/add', MenuAdd::class)->name('menu-create');
+        Route::get('/edit/{id}', MenuEdit::class)->name('menu-edit');
     });
 });

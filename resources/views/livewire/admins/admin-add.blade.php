@@ -120,37 +120,6 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group mt-4">
-                                                <div wire:ignore
-                                                    class="@error('path') border border-danger rounded-3 @enderror">
-                                                    <label for="exampleInputName">{{ __('messages.Image') }}:</label>
-                                                    <input type="file" class="form-control border border-2 p-2"
-                                                        id="exampleInputName" wire:model="path">
-                                                </div>
-                                                @error('path')
-                                                <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        @if ($path)
-                                        <div
-                                            class="d-flex flex-wrap justify-content-start align-items-center mt-1 gap-2">
-
-                                            <div class="position-relative">
-                                                <img src="{{ $path->temporaryUrl() }}" width="100"
-                                                    height="100" class="rounded-circle">
-                                                <button type="button"
-                                                    class="btn btn-danger btn-sm position-absolute top-0 end-0"
-                                                    wire:click="removeImage()">X</button>
-                                            </div>
-
-                                        </div>
-                                        @endif
-
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

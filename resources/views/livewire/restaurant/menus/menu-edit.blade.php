@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="justify-content-center">
+        @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible text-white" role="alert">
+            <span class="text-lg">{{ session('success') }}</span>
+            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+        @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible text-white" role="alert">
+            <span class="text-lg">
+                عفوا!
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </span>
+            <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                {{ __('messages.Create Menu') }}
+                <span class="float-right mt-3">
+                    <span class="d-flex align-items-center">
+                        <a class="btn bg-gradient-primary"
+                            href="{{ route('menus') }}">{{ __('messages.Menus') }}</a>
+                    </span>
+                </span>
+            </div>
+            <div class="card-body">
+                <form wire:submit.prevent="update">
+
+                    @foreach ($languages['data'] as $lang)
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <div class="form-group mt-4">
+                                <label for="name.name_{{ $lang['code'] }}"
+                                    class="form-control-label">{{ __('messages.' . $lang['name'] . ' Name') }}</label>
+                                <div
+                                    class="@error('name.name_' . $lang['code']) border border-danger rounded-3 @enderror">
+
+                                    <input wire:model="name.name_{{ $lang['code'] }}"
+                                        direction="{{ $lang['direction'] }}" data="{!! $name['name_' . $lang['code']] !!}"
+                                        code="{{ $lang['code'] }}" id="name_{{ $lang['code'] }}" prefix="name"
+                                        class="form-control border border-2 p-2">
+                                </div>
+
+                                @error('name.name_' . $lang['code'])
+                                <div class="text-danger">{{ explode('.', $message)[1] }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
+                            {{ __('messages.Save') }}</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

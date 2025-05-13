@@ -38,6 +38,10 @@ return [
     'Sign in' => 'Sign in',
     'Sign up' => 'Sign up',
     'Reset Password' => 'Reset Password',
+    'Restaurant' => 'Restaurant',
+    'Manage Foods' => 'Manage Foods',
+    'Manage Menus' => 'Manage Menus',
+    'Manage Restaurant' => 'Manage Restaurant',
 
 
     // Roles page
@@ -100,9 +104,9 @@ return [
     'Add New Category' => 'Add New Category',
     'Create Category' => 'Create Category',
     'Categories' => 'Categories',
-    'English Name' => 'English',
-    'Arabic Name' => 'Arabic',
-    'Farsi Name' => 'Farsi',
+    'English Name' => 'English Name',
+    'Arabic Name' => 'Arabic Name',
+    'Farsi Name' => 'Farsi Name',
     'category created successfully' => 'Category created successfully',
     'category updated successfully' => 'Category updated successfully',
 
@@ -114,5 +118,26 @@ return [
     'amenity created successfully' => 'Amenity created successfully',
     'amenity updated successfully' => 'Amenity updated successfully',
 
+    // Room
 
+    'Create Room' => 'Create Room',
+    'Rooms' => 'Rooms',
+    'Number' => 'Room Number',
+    'Floor' => 'Floor',
+    'Bed count' => 'Number of Beds',
+    'Capacity' => 'Room Capacity',
+    'Price per night' => 'Price per Night',
+    'Size/Area' => 'Size / Area (m²)',
+    'Occupation start date' => 'Occupation Start Date',
+    'Occupation end date' => 'Occupation End Date',
+    'English Status' => 'Status (English)',
+    'English View' => 'View (English)',
+    'English Description' => 'Description (English)',
+    'Arabic Status' => 'Status (Arabic)',
+    'Arabic View' => 'View (Arabic)',
+    'Arabic Description' => 'Description (Arabic)',
+    'Farsi Status' => 'Status (Farsi)',
+    'Farsi View' => 'View (Farsi)',
+    'Farsi Description' => 'Description (Farsi)',
+    'Room Category' => 'Room Category',
 ];

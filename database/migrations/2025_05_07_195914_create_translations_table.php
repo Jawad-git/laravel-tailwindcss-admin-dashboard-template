@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('model_type');
             $table->string('language_id')->nullable()->constrained('languages')->onDelete('cascade');
             $table->longtext('name')->nullable();
+            $table->string('view', 72)->nullable();;
+            $table->string('description', 72)->nullable();;
             $table->timestamps();
         });
     }

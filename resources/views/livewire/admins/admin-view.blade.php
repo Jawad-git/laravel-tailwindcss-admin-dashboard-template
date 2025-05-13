@@ -43,10 +43,6 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             ID</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            {{ __('messages.Image') }}
-                                        </th>
 
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -80,12 +76,6 @@
                                         <td class="align-middle text-center">
                                             <span
                                                 class="text-secondary text-xs font-weight-bold">{{ $admin->id }}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-
-                                            <img class="w-16 h-16 rounded-lg object-cover"
-                                                src="{{ !empty($admin->avatar) ? asset('storage/' . $admin->avatar) : asset('images/default-profile.png')}}" width="50"
-                                                height="50" style="border-radius: 100px" />
                                         </td>
                                         <td class="align-middle text-center">
                                             <span

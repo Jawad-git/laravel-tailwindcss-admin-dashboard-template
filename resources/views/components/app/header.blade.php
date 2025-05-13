@@ -24,7 +24,6 @@
             <!-- Header: Right side -->
             <div class="flex items-center space-x-3">
 
-                <x-dropdown-languages align="left" />
 
                 <!-- Search Button with Modal -->
                 <x-modal-search />
@@ -37,7 +36,7 @@
 
                 <!-- Dark mode toggle -->
                 <x-theme-toggle />
-                <x-dropdown-languages align="left" />
+                <x-dropdown-languages align="right" />
 
                 <!-- Divider -->
                 <hr class="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />

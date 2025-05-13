@@ -38,6 +38,10 @@ return [
     'Sign up' => 'إنشاء حساب',
     'Reset Password' => 'إعادة تعيين كلمة المرور',
     'Authentication' => 'المصادقة',
+    'Restaurant' => 'مطعم',
+    'Manage Foods' => 'إدارة الأطعمة',
+    'Manage Menus' => 'إدارة القوائم',
+    'Manage Restaurant' => 'إدارة المطعم',
 
 
     // Roles page

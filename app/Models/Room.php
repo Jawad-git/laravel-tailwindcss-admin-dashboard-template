@@ -12,9 +12,14 @@ class Room extends Model implements AuditableContract
 {
     use Auditable;
 
-    public function roomImages()
+    public function images()
     {
-        return $this->hasMany(RoomImage::class, 'room_id');
+        return $this->morphMany(Image::class, 'model');
+    }
+
+    public function translations()
+    {
+        return $this->morphMany(Translation::class, 'model');
     }
 
     public function category()
@@ -25,5 +30,13 @@ class Room extends Model implements AuditableContract
     public function amenities(): BelongsToMany
     {
         return $this->belongsToMany(Amenity::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($room) {
+            $room->translations()->delete(); // assuming this is a morphMany
+            $room->images()->delete();
+        });
     }
 }

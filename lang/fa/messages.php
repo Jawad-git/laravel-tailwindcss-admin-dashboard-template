@@ -38,6 +38,10 @@ return [
     'Sign up' => 'ثبت‌نام',
     'Reset Password' => 'بازنشانی رمز عبور',
     'Authentication' => 'المصادقة',
+    'Restaurant' => 'رستوران',
+    'Manage Foods' => 'مدیریت غذاها',
+    'Manage Menus' => 'مدیریت منوها',
+    'Manage Restaurant' => 'مدیریت رستوران',
 
 
 

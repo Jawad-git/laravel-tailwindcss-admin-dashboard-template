@@ -32,7 +32,6 @@ class AdminAdd extends Component
     public $countries;
     public $countryIdField;
     public $selectedCountry = 121;
-    public $path;
     protected $listeners = [
         'cardLoaded',
     ];
@@ -70,10 +69,6 @@ class AdminAdd extends Component
     {
         $this->notBooted = $isBooted;
     }
-    public function removeImage()
-    {
-        $this->path = null;
-    }
     public function store()
     {
         $this->dispatch('scrollToElement');
@@ -85,17 +80,6 @@ class AdminAdd extends Component
         DB::beginTransaction();
 
         try {
-            if ($this->path) {
-
-                $path = MediaManagementService::uploadMedia(
-                    $this->path,
-                    '/admins',
-                    env('FILESYSTEM_DRIVER'),
-                    explode('.', $this->path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $this->path->getClientOriginalExtension()
-                );
-            } else {
-                $path = null;
-            }
             $user = new User();
             $user->name = $validatedData['name'];
             $user->phone = $validatedData['phone'];
@@ -103,7 +87,6 @@ class AdminAdd extends Component
             $user->password = $validatedData['password'];
             $user->address = $validatedData['address'];
             $user->phone_code = $this->selectedCountry;
-            $user->avatar = $path;
             $user->save();
 
             $role = Role::find($validatedData['selectedrole']);
