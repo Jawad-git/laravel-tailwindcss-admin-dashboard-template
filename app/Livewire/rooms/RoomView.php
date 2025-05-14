@@ -18,6 +18,8 @@ class RoomView extends Component
 
     protected $rooms;
     public $language;
+    public $availableRooms = [];
+
     public $search = '';
     protected $paginationTheme = 'bootstrap';
     public $searchableFields = ['number'];
@@ -51,6 +53,13 @@ class RoomView extends Component
         }
     }
 
+    public function toggleAvailability($id)
+    {
+        $room = Room::findOrFail($id);
+        $room->is_available = !$room->is_available;
+        $room->save();
+    }
+
 
 
     public function render()
@@ -64,9 +73,9 @@ class RoomView extends Component
         })->with(['category.translations' => function ($query) use ($language) {
             $query->where('language_id', $language);
         }])->with(['amenities.translations' => function ($query) use ($language) {
-                $query->where('language_id', $language);
+            $query->where('language_id', $language);
         }])
-        ->searchMany($this->searchableFields, $this->search);
+            ->searchMany($this->searchableFields, $this->search);
 
         return view('livewire.rooms.room-view', ['rooms' => $this->rooms]);
     }

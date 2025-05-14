@@ -11,7 +11,7 @@ use OwenIt\Auditing\Auditable;
 class Translation extends Model implements AuditableContract
 {
     use HasFactory, Auditable;
-    protected $fillable = ['name', 'model_id', 'model_type', 'language_id'];
+    protected $fillable = ['name', 'description', 'view', '', 'model_id', 'model_type', 'language_id'];
 
     public function model()
     {

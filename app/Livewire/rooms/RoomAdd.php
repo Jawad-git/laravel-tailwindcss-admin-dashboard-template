@@ -5,6 +5,7 @@ namespace App\Livewire\rooms;
 use App\Models\Language;
 use App\Models\Room;
 use App\Models\RoomCategory;
+use Livewire\Attributes\On;
 use App\Models\Amenity;
 use App\Models\RoomDetails;
 use App\Models\Translation;
@@ -18,12 +19,13 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoomAdd extends Component
 {
-    use AuthorizesRequests, WithPagination;
+    use AuthorizesRequests, WithFileUploads;
 
     public $search = '';
 
@@ -34,6 +36,7 @@ class RoomAdd extends Component
     public $views;
     public $descriptions;
 
+
     public $number;
     public $floor;
     public $capacity;
@@ -41,7 +44,8 @@ class RoomAdd extends Component
     public $bedCount;
     public $pricePerNight;
     public $size;
-    public $isAvailable;
+    // room is available by default
+    public $isAvailable = 1;
 
     public $paths;
     public $selectedCategory;
@@ -49,6 +53,8 @@ class RoomAdd extends Component
     public $amenityOptions;
     public $selectedAmenities;
     public $language;
+
+    public $fileCount = 0;
 
 
 
@@ -73,21 +79,21 @@ class RoomAdd extends Component
         return [
             'bedCount' => 'required|integer',
             'pricePerNight' => 'required|numeric|min:0',
-            'number' => 'required|string',
+            'number' => 'required|string', // should be unique in rooms table! google/chatgpt it
             'capacity' => 'nullable|integer|min:1',
             'floor' => 'nullable|integer',
             'size' => 'nullable|numeric|min:0',
             'views.*' => 'nullable|string',
             'descriptions.*' => 'nullable|string',
             'selectedCategory' => 'required|integer|exists:room_categories,id',
-            'selectedAmenities' => 'array|integer|exists:amenities,id',
-            'paths.*' => 'nullable|array|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // 2MB per file
+            'selectedAmenities' => 'nullable|array',
+            'selectedAmenities.*' => 'integer|exists:amenities,id',
         ];
     }
 
     public function mount()
     {
-        $this->authorize('room-create');
+        //$this->authorize('room-create');
         $this->languages = LanguageManagementService::getLanguages();
         foreach ($this->languages['data'] as $lang) {
             $this->statuses["status_" . $lang['code']] = '';
@@ -96,25 +102,30 @@ class RoomAdd extends Component
         }
     }
 
+    public function removeImage($index)
+    {
+        unset($this->paths[$index]);
+        $this->paths = array_values($this->paths);
+        $this->dispatch('resetFileInput', $index);
+    }
+
     #[On('categorySelectize')]
     public function categorySelectize($values)
     {
-        $this->selectedCategory = $values;
-        dd($this->selectedCategory);
+        $this->selectedCategory = (int) $values;
+        //dd($this->selectedCategory);
     }
 
     #[On('amenitySelectize')]
-    public function materialSelectize($values)
+    public function amenitySelectize($values)
     {
         $this->selectedAmenities = $values;
-        dd($this->selectedAmenities);
+        //dd($this->selectedAmenities);
     }
 
     public function store()
     {
 
-        dd($this->selectedCategory);
-        dd($this->selectedAmenities);
 
 
         $this->resetErrorBag();
@@ -130,21 +141,26 @@ class RoomAdd extends Component
         try {
             $room = new Room();
             $room->capacity = $validatedData['capacity'];
-            $room->room_category = $validatedData['roomCategory'];
+            $room->room_category_id = $validatedData['selectedCategory']; // -->undefined array key roomCategory
             $room->number = $validatedData['number'];
             $room->floor = $validatedData['floor'];
             $room->price_per_night = $validatedData['pricePerNight'];
             $room->size = $validatedData['size'];
-            $room->is_available = 1;
+            $room->bed_count = $validatedData['bedCount'];
+            $room->is_available = $this->isAvailable ? 1 : 0; // if its true its available, set 1, otherwise, 0.
             $room->save();
+
+            if (!empty($this->selectedAmenities)) {
+                $room->amenities()->sync($validatedData['selectedAmenities']);
+            }
 
             if ($this->paths) {
                 foreach ($this->paths as $path) {
                     $image = MediaManagementService::uploadMedia(
-                        $this->path,
+                        $path,
                         '/rooms',
                         env('FILESYSTEM_DRIVER'),
-                        explode('.', $this->path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $this->path->getClientOriginalExtension()
+                        explode('.', $path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $path->getClientOriginalExtension()
                     );
                     $room->images()->create([
                         'path' => $image,

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('availabilities', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('model_id');
+            $table->string('model_type');
+            $table->unsignedTinyInteger('weekday');      // 0 = Sunday, 6 = Saturday
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

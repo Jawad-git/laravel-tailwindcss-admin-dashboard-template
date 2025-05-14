@@ -11,7 +11,7 @@ use OwenIt\Auditing\Auditable;
 class Availability extends Model implements AuditableContract
 {
     use HasFactory, Auditable;
-    protected $fillable = ['path', 'model_id', 'model_type'];
+    protected $fillable = ['start_time', 'end_time', 'weekday'. 'active', 'model_id', 'model_type'];
 
     public function model()
     {

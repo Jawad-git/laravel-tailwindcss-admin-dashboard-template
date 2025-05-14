@@ -63,9 +63,9 @@
                                                     <x-orion.dashboard-th>{{ __('messages.Number') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Category') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Floor') }}</x-orion.dashboard-th>
-                                                    <x-orion.dashboard-th>{{ __('messages.Status') }}</x-orion.dashboard-th>
-                                                    <x-orion.dashboard-th>{{ __('messages.Price per night') }}</x-orion.dashboard-th>
+                                                    <x-orion.dashboard-th>{{ __('messages.Available') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Bed count') }}</x-orion.dashboard-th>
+                                                    <x-orion.dashboard-th>{{ __('messages.Price per night') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th> {{ __('messages.Creation Date') }}</x-orion.dashboard-th>
                                                 </tr>
                                             </thead>
@@ -87,17 +87,7 @@
 
                                                     <x-orion.dashboard-td>
                                                         <x-orion.dashboard-td-span>
-                                                            {{ $room->translations->first()->category->translations->first()->name }}
-                                                        </x-orion.dashboard-td-span>
-                                                    </x-orion.dashboard-td>
-
-                                                    <x-orion.dashboard-td>
-                                                        <x-orion.dashboard-td-span>
-                                                            @if ( $room->is_available )
-                                                            {{ __("Available") }}
-                                                            @else
-                                                            {{ __("Unavailable") }}
-                                                            @endif
+                                                            {{ $room->category->translations->first()->name }}
                                                         </x-orion.dashboard-td-span>
                                                     </x-orion.dashboard-td>
 
@@ -108,6 +98,16 @@
                                                     </x-orion.dashboard-td>
 
                                                     <x-orion.dashboard-td>
+                                                        <div class="form-check form-switch h-100 w-100 d-flex justify-content-center">
+                                                            <input class="form-check-input self-center "
+                                                                {{ $room->is_available ? 'checked' : '' }}
+                                                                type="checkbox"
+                                                                role="switch"
+                                                                wire:click="toggleAvailability({{ $room->id }})">
+                                                        </div>
+                                                    </x-orion.dashboard-td>
+
+                                                    <x-orion.dashboard-td>
                                                         <x-orion.dashboard-td-span>
                                                             {{ $room->bed_count }}
                                                         </x-orion.dashboard-td-span>
@@ -115,7 +115,7 @@
 
                                                     <x-orion.dashboard-td>
                                                         <x-orion.dashboard-td-span>
-                                                            {{ $room->translations->first()->price_per_night }}
+                                                            {{ $room->price_per_night }}
                                                         </x-orion.dashboard-td-span>
                                                     </x-orion.dashboard-td>
 

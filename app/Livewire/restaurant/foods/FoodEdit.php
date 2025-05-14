@@ -69,7 +69,7 @@ class FoodEdit extends Component
                     'name' => optional($menu->translations->first())->name ?? 'Unnamed',
                 ];
             })
-            ->toArray();;
+            ->toArray();
     }
 
     #[On('menuSelectize')]
