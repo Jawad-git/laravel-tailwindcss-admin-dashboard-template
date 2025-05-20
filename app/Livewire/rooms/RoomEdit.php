@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\RoomCategory;
 use Livewire\Attributes\On;
 use App\Models\Amenity;
+use App\Models\Image;
 use App\Models\RoomDetails;
 use App\Models\Translation;
 use Illuminate\Validation\Rule;
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+
+
 
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -47,14 +52,17 @@ class RoomEdit extends Component
     public $size;
     public $isAvailable;
 
-    public $paths;
     public $selectedCategory;
     public $categoryOptions;
     public $amenityOptions;
     public $selectedAmenities;
     public $language;
 
-    public $fileCount = 0;
+    public array $existingPhotos = [];   // Paths from DB
+    public array $photos = [];        // Files uploaded via dropzone
+    public array $removedPhotos = [];
+    // photos
+    public array $oldDocs = [];
 
 
 
@@ -92,11 +100,41 @@ class RoomEdit extends Component
     }
 
 
+    public function toggleAvailability()
+    {
+        $this->isAvailable = !$this->isAvailable;
+    }
+
     public function removeImage($index)
     {
         unset($this->paths[$index]);
-        $this->paths = array_values($this->paths);
+        $this->oldDocs = array_values($this->paths);
         MediaManagementService::removeMedia($this->paths[$index]);
+    }
+
+
+    #[On('removeOldUpload')]
+    public function removeOldUpload($id)
+    {
+        $photo = Image::find($id);
+
+        $found = null;
+        foreach ($this->oldDocs as $index => $doc) {
+            if ($doc['id'] === $id) {
+                unset($this->oldDocs[$index]); // remove from the actual array
+                break;
+            }
+        }
+        $this->oldDocs = array_values($this->oldDocs);
+        $this->removedPhotos[] = $photo;
+    }
+
+    public function deleteOldUploads($oldUploads)
+    {
+        foreach ($oldUploads as $oldUpload) {
+            MediaManagementService::removeMedia($oldUpload['path']);
+            $this->room->images()->where('id', $oldUpload['id'])->delete();
+        }
     }
 
     #[On('categorySelectize')]
@@ -128,7 +166,32 @@ class RoomEdit extends Component
             $this->descriptions["description_" . $lang['code']] = $translation ? $translation->description : '';
             $this->views["view_" . $lang['code']] = $translation ? $translation->view : '';
         }
-        $this->paths = $this->room->images->pluck('path')->toArray();
+        $images = $this->room->images->map(function ($image) {
+            return [
+                'id' => $image->id,
+                'path' => $image->path,
+            ];
+        })->toArray();
+        $disk = 'public';
+
+        foreach ($images as $image) {
+            $path = $image['path'];
+            $file = [];
+            $file['path'] = $path;
+            $file['id'] = $image['id'];
+            $file['name'] = basename($path);
+            $file['extension'] = pathinfo($path, PATHINFO_EXTENSION);
+            if (Storage::disk($disk)->exists($path)) {
+                $fileSize = Storage::disk($disk)->size($path);
+                $file['size'] = $fileSize;
+            } else {
+                throw new \Exception("File does not exist at: $path on disk $disk");
+            }
+            $file['temporaryUrl'] = Storage::url($path); // gives you /storage/uploads/example.pdf
+            $this->oldDocs[] = $file;
+            dump($this->oldDocs);
+        }
+
         $this->selectedCategory = $this->room->room_category_id;
         $this->bedCount = $this->room->bed_count;
         $this->size = $this->room->size;
@@ -197,31 +260,24 @@ class RoomEdit extends Component
                 $room->amenities()->detach();
             }
 
-            foreach ($room->images as $image) {
-                MediaManagementService::removeMedia($image->path);
-                $image->delete();
-            }
-
-            if ($this->paths) {
-                foreach ($this->paths as $path) {
-                    $image;
-                    if (!is_string(value: $this->path)) {
-                        $image = MediaManagementService::uploadMedia(
-                            $path,
-                            '/rooms',
-                            env('FILESYSTEM_DRIVER'),
-                            explode('.', $path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $path->getClientOriginalExtension()
-                        );
-                    } else {
-                        $image = $this->path;
-                    }
-                    if (!$room->images()->where('path', $image)->exists()) {
-                        $room->images()->create([
-                            'path' => $image,
-                        ]);
-                    }
+            if ($this->photos) {
+                //$flatPhotos = is_array($this->photos[0]) ? Arr::flatten($this->photos) : $this->photos;
+                foreach ($this->photos as $photo) {
+                    $photo = TemporaryUploadedFile::createFromLivewire($photo['tmpFilename']);
+                    //dump($photo);
+                    $image = MediaManagementService::uploadMedia(
+                        $photo,
+                        '/rooms',
+                        env('FILESYSTEM_DRIVER'),
+                        explode('.', $photo->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $photo->getClientOriginalExtension()
+                    );
+                    $room->images()->create([
+                        'path' => $image,
+                    ]);
                 }
             }
+
+            $this->deleteOldUploads($this->removedPhotos);
 
 
             foreach ($this->languages['data'] as $value) {

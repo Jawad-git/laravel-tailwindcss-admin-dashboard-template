@@ -93,8 +93,8 @@
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <div class="form-check form-switch d-flex justify-content-center">
-                                                <input class="form-check-input"
+                                            <div class="form-check form-switch h-100 w-100 d-flex justify-content-center">
+                                                <input class="form-check-input self-center"
                                                     wire:model.live="neverExpired.{{ $admin->id }}"
                                                     type="checkbox" role="switch">
                                             </div>

@@ -71,6 +71,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <div class="form-group mt-4">
+                                <livewire:dropzone
+                                    wire:model="photos"
+                                    :oldDocs="$oldDocs"
+                                    :rules="['image','mimes:png,jpeg','max:10420']"
+                                    :multiple="true" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
                             {{ __('messages.Save') }}</button>

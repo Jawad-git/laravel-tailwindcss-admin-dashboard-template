@@ -96,8 +96,8 @@
                             </div>
                         </div>
                     </div>
+                    @foreach ($languages['data'] as $lang)
                     <div class="row ">
-                        @foreach ($languages['data'] as $lang)
                         <div class="col-md-6 ">
                             <div class="form-group mt-4">
                                 <x-orion.form-label-multilingual :language="$lang" inputkey="view">
@@ -116,84 +116,109 @@
                                 <x-orion.form-error-multilingual objectName="descriptions" :language="$lang" inputkey="description" />
                             </div>
                         </div>
-                        @endforeach
-                        <div class="row ">
-                            <div class="col-md-4 ">
-                                <div class="form-group mt-4">
-                                    <div class="form-group mt-4" wire:ignore>
-                                        <x-orion.form-label inputkey="selectedCategory">{{ __("messages.Category") }}</x-orion.form-label>
-                                        <x-orion.form-select-selectize defaultOption="Select Category" inputkey="selectedCategory" :options="$categoryOptions" class="selectizeCategory" />
-                                        <x-orion.form-error inputkey="selectedCategory" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8 ">
+                    </div>
+                    @endforeach
+                    <div class="row ">
+                        <div class="col-md-4 ">
+                            <div class="form-group mt-4">
                                 <div class="form-group mt-4" wire:ignore>
-                                    <x-orion.form-label inputkey="selectedAmenities">
-                                        {{ __('messages.Amenities') }}
-                                    </x-orion.form-label>
-                                    <x-orion.form-select-selectize multiple defaultOption="Select Amenities" inputkey="selectedAmenities" :options="$amenityOptions" class="selectizeAmenities" />
-                                    <x-orion.form-error inputkey="selectedAmenities" />
+                                    <x-orion.form-label inputkey="selectedCategory">{{ __("messages.Category") }}</x-orion.form-label>
+                                    <x-orion.form-select-selectize defaultOption="Select Category" inputkey="selectedCategory" :options="$categoryOptions" class="selectizeCategory" />
+                                    <x-orion.form-error inputkey="selectedCategory" />
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-8 ">
+                            <div class="form-group mt-4" wire:ignore>
+                                <x-orion.form-label inputkey="selectedAmenities">
+                                    {{ __('messages.Amenities') }}
+                                </x-orion.form-label>
+                                <x-orion.form-select-selectize multiple defaultOption="Select Amenities" inputkey="selectedAmenities" :options="$amenityOptions" class="selectizeAmenities" />
+                                <x-orion.form-error inputkey="selectedAmenities" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-9 ">
+                            <div class="form-group mt-4">
+                                <livewire:dropzone
+                                    wire:model="photos"
+                                    :rules="['image','mimes:png,jpeg','max:10420']"
+                                    :multiple="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 ms-auto d-flex align-items-end justify-content-start gap-2 ">
+                            <div class="form-check form-switch h-100 w-100 d-flex justify-content-center">
+                                <div class="gap-1 mt-6">
+
+                                    <label for="isAvailableRoomAdd">Available?</label>
+                                    <input class="form-check-input "
+                                        id="isAvailableRoomAdd"
+                                        {{ $isAvailable ? 'checked' : '' }}
+                                        type="checkbox"
+                                        role="switch"
+                                        wire:click="toggleAvailability()">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {{--
+                    <div class="row">
                         <div class="row justify-content-between ">
                             <div class="col-md-9">
-                                <div class="form-group mt-4">
                                     <div wire:ignore
                                         class="@error('paths') border border-danger rounded-3 @enderror">
                                         <label for="paths">{{ __('messages.Image') }}:</label>
-                                        <input type="file" class="form-control border border-2 p-2 file-input-with-hidden-text"
-                                            id="paths" wire:model="paths" multiple placeholder="{{ $fileCount . 'files chosen' }}">
-                                    </div>
-                                    @error('paths')
-                                    <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-3 ms-auto d-flex align-items-end justify-content-center gap-2 ">
-                                <div class="form-check mt-4">
-                                    <label class="form-check-label role-check-label me-2"
-                                        for="isAvailable">
-                                        {{ __("messages.Available?") }}
-                                    </label>
-                                    <input wire:model="isAvailable"
-                                        class="form-check-input" type="checkbox" value=""
-                                        {{ $isAvailable ? 'checked' : '' }}
-                                        id="isAvailable">
-                                </div>
-                            </div>
-                        </div>
-                        @if ($paths)
-                        <div class="d-flex flex-wrap justify-content-start align-items-center mt-1 gap-2">
-                            @foreach ($paths as $index=> $path)
-
-                            <div class="position-relative">
-                                <img src="{{ $path->temporaryUrl() }}" width="100"
-                                    height="100" class="rounded-circle">
-                                <button type="button"
-                                    class="btn btn-danger btn-sm position-absolute top-0 end-0"
-                                    wire:click="removeImage({{ $index }})">X</button>
-                            </div>
-
-                            @endforeach
-                        </div>
-                        @endif
-
-
-                    </div>
-
+                    <input type="file" class="form-control border border-2 p-2 file-input-with-hidden-text"
+                        id="paths" wire:model="paths" multiple placeholder="{{ $fileCount . 'files chosen' }}">
             </div>
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
-                    {{ __('messages.Save') }}</button>
-            </div>
-
-            </form>
+            @error('paths')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+    <div class="col-md-3 ms-auto d-flex align-items-end justify-content-center gap-2 ">
+        <div class="form-check mt-4">
+            <label class="form-check-label role-check-label me-2"
+                for="isAvailable">
+                {{ __("messages.Available?") }}
+            </label>
+            <input wire:model="isAvailable"
+                class="form-check-input" type="checkbox" value=""
+                {{ $isAvailable ? 'checked' : '' }}
+                id="isAvailable">
         </div>
     </div>
 </div>
+@if ($paths)
+<div class="d-flex flex-wrap justify-content-start align-items-center mt-1 gap-2">
+    @foreach ($paths as $index=> $path)
+
+    <div class="position-relative">
+        <img src="{{ $path->temporaryUrl() }}" width="100"
+            height="100" class="rounded-circle">
+        <button type="button"
+            class="btn btn-danger btn-sm position-absolute top-0 end-0"
+            wire:click="removeImage({{ $index }})">X</button>
+    </div>
+
+    @endforeach
 </div>
+@endif
+</div>
+--}}
+
+<div class="d-flex justify-content-end">
+    <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
+        {{ __('messages.Save') }}</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+
 @push('js')
 
 <script>
@@ -247,10 +272,14 @@
                 create: false,
                 placeholder: 'Select materials...',
                 onChange: function(values) {
-                    Livewire.dispatch(livewireEvent, [values]);
-                    console.log(values);
+                    const visibleSelectedItems = this.items;
+                    Livewire.dispatch(livewireEvent, [visibleSelectedItems]);
+                    console.log(visibleSelectedItems); // e.g., ['2', '4']
                 },
+
+
                 onInitialize: function() {
+                    console.log('here' + this.items + 'here');
                     selectizeInstances[selector] = this;
 
                     if (clearOption) {
@@ -268,6 +297,8 @@
 
                     if (selected && selected.length) {
                         this.setValue(selected);
+                        console.log(this.items);
+
                     }
                 }
 

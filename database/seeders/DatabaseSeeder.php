@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Livewire\SwimmingPool;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +21,11 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             PermissionTableSeeder::class,
             CreateAdminUserSeeder::class,
+            RestaurantSeeder::class,
+            AboutUsSeeder::class,
+            SwimmingPoolSeeder::class,
+            WeekdaySeeder::class,
+
         ]);
     }
 }

@@ -35,55 +35,36 @@
                 </span>
             </div>
             <div class="card-body">
-                <form wire:submit.prevent="store">
+                <form wire:submit.prevent="update">
 
                     @foreach ($languages['data'] as $lang)
-
                     <div class="row ">
                         <div class="col-md-12 ">
                             <div class="form-group mt-4">
-                                <x-orion.form-label-multilingual :language="$lang" inputkey="name">
-                                    {{ __('messages.' . $lang['name'] . ' Name') }}
+                                <x-orion.form-label-multilingual :language="$lang" inputkey="description">
+                                    {{ __('messages.' . $lang['name'] . ' Description') }}
                                 </x-orion.form-label-multilingual>
-                                <x-orion.form-input-multilingual :language="$lang" inputkey="name" objectName="name" />
-                                <x-orion.form-error-multilingual :language="$lang" inputkey="name" objectName="name" />
+                                <x-orion.form-input-multilingual :language="$lang" inputkey="description" objectName="descriptions" />
+                                <x-orion.form-error-multilingual :language="$lang" inputkey="description" objectName="descriptions" />
                             </div>
                         </div>
                     </div>
-
                     @endforeach
                     <div class="row ">
                         <div class="col-md-12 ">
                             <div class="form-group mt-4">
-                                <x-orion.form-label inputkey="price">{{ __("messages.Price") }}</x-orion.form-label>
-                                <x-orion.form-input type="number" inputkey="price" />
-                                <x-orion.form-error inputkey="price" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row ">
-                        <div class="col-md-12 ">
-                            <div class="form-group mt-4" wire:ignore>
-                                <x-orion.form-label inputkey="selectedMenu">{{ __("messages.Menu") }}</x-orion.form-label>
-                                <x-orion.form-select-selectize placeholder="choose an element" inputkey="selectedMenu" :options="$menuOptions" class="selectizeMenus" />
-                                <x-orion.form-error inputkey="selectedMenu" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row ">
-                        <div class="col-md-12">
-                            <div class="form-group mt-4">
                                 <livewire:dropzone
                                     wire:model="photos"
+                                    :oldDocs="$oldDocs"
                                     :rules="['image','mimes:png,jpeg','max:10420']"
                                     :multiple="true" />
                             </div>
                         </div>
                     </div>
-
-                    <x-orion.form-submit>
-                        {{ __('messages.Save') }}
-                    </x-orion.form-submit>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
+                            {{ __('messages.Save') }}</button>
+                    </div>
 
                 </form>
             </div>
@@ -92,9 +73,10 @@
 </div>
 
 @push('js')
-
 <script>
     document.addEventListener('livewire:init', () => {
+        const selectedMenu = @json($selectedMenu);
+
         const selectizeInstances = {};
 
         function initializeSelectize({
@@ -110,8 +92,8 @@
             let $select = $(selector);
             if ($select[0]?.selectize) {
                 $select[0].selectize.destroy();
-
             }
+
             $select.selectize({
                 persist: false,
                 plugins: ['remove_button', 'clear_button'],
@@ -122,9 +104,8 @@
                 allowEmptyOption: true,
                 showEmptyOptionInDropdown: true,
                 create: false,
-                placeholder: 'Select materials...',
+                placeholder: 'Select menu...',
                 onChange: function(values) {
-                    //console.log('Dispatching:', livewireEvent, [values]);
                     Livewire.dispatch(livewireEvent, [values]);
                 },
                 onInitialize: function() {
@@ -143,21 +124,18 @@
 
                     this.refreshOptions(false);
 
-                    if (selected && selected.length) {
+                    if (selected) {
                         this.setValue(selected);
                     }
                 }
-
             });
         }
 
         initializeSelectize({
             selector: '.selectizeMenus',
             livewireEvent: 'menuSelectize',
+            selected: selectedMenu,
         });
-
     });
 </script>
-
-
 @endpush

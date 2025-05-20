@@ -67,6 +67,8 @@
                                                     <x-orion.dashboard-th>{{ __('messages.Bed count') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Price per night') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th> {{ __('messages.Creation Date') }}</x-orion.dashboard-th>
+                                                    <x-orion.dashboard-th> {{ __('messages.Action') }}</x-orion.dashboard-th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -118,6 +120,13 @@
                                                             {{ $room->price_per_night }}
                                                         </x-orion.dashboard-td-span>
                                                     </x-orion.dashboard-td>
+
+                                                    <x-orion.dashboard-td>
+                                                        <x-orion.dashboard-td-span>
+                                                            {{ $room->created_at->format('Y-m-d') }}
+                                                        </x-orion.dashboard-td-span>
+                                                    </x-orion.dashboard-td>
+
 
                                                     <td class="text-center">
                                                         @can('room-edit')

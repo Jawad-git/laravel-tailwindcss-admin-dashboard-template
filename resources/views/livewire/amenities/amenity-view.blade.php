@@ -62,6 +62,8 @@
                                                     <x-orion.dashboard-th>#</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Name') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th> {{ __('messages.Creation Date') }}</x-orion.dashboard-th>
+                                                    <x-orion.dashboard-th> {{ __('messages.Action') }}</x-orion.dashboard-th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -75,6 +77,10 @@
                                                     <td class="align-middle text-center">
                                                         <span
                                                             class="text-secondary text-xs font-weight-bold">{{ $amenity->translations->first()->name }}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span
+                                                            class="text-secondary text-xs font-weight-bold">{{ $amenity->created_at->format('Y-m-d') }}</span>
                                                     </td>
                                                     <td class="text-center">
                                                         @can('amenity-edit')

@@ -110,6 +110,7 @@ return [
     'category created successfully' => 'Category created successfully',
     'category updated successfully' => 'Category updated successfully',
 
+
     // Amenities
 
     'Add New Amenity' => 'Add New Amenity',
@@ -117,6 +118,8 @@ return [
     'Create Amenity' => 'Create Amenity',
     'amenity created successfully' => 'Amenity created successfully',
     'amenity updated successfully' => 'Amenity updated successfully',
+
+    'Edit Amenity' => 'Edit Amenity',
 
     // Room
 
@@ -140,4 +143,11 @@ return [
     'Farsi View' => 'View (Farsi)',
     'Farsi Description' => 'Description (Farsi)',
     'Room Category' => 'Room Category',
+
+    'Available' => 'Available',
+    'Category' => 'Category',
+    'Add New Room' => 'Add new room',
+
+    // Food 
+
 ];

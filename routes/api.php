@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// timestamps on tables -- done
+// array of images on deletion
+// switch instead of checkbox. -- done

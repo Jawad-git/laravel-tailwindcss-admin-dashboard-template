@@ -72,6 +72,10 @@
                                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                         {{ __('messages.Creation Date') }}
                                                     </th>
+                                                    <th
+                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                        {{ __('messages.Action') }}
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -85,6 +89,10 @@
                                                     <td class="align-middle text-center">
                                                         <span
                                                             class="text-secondary text-xs font-weight-bold">{{ $category->translations->first()->name }}</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span
+                                                            class="text-secondary text-xs font-weight-bold">{{ $category->created_at->format('Y-m-d') }}</span>
                                                     </td>
                                                     <td class="text-center">
                                                         @can('category-edit')

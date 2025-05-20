@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
+use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Spatie\Permission\Models\Permission;
@@ -47,18 +49,19 @@ class RoomAdd extends Component
     // room is available by default
     public $isAvailable = 1;
 
-    public $paths;
     public $selectedCategory;
     public $categoryOptions;
     public $amenityOptions;
     public $selectedAmenities;
     public $language;
 
-    public $fileCount = 0;
+    public $photos = [];
 
 
-
-
+    public function toggleAvailability()
+    {
+        $this->isAvailable = !$this->isAvailable;
+    }
     protected function rules()
     {
         $allowedStatuses = [
@@ -104,8 +107,8 @@ class RoomAdd extends Component
 
     public function removeImage($index)
     {
-        unset($this->paths[$index]);
-        $this->paths = array_values($this->paths);
+        unset($this->photos[$index]);
+        $this->photos = array_values($this->photos);
         $this->dispatch('resetFileInput', $index);
     }
 
@@ -120,13 +123,11 @@ class RoomAdd extends Component
     public function amenitySelectize($values)
     {
         $this->selectedAmenities = $values;
-        //dd($this->selectedAmenities);
+        $this->dispatch('$refresh');
     }
 
     public function store()
     {
-
-
 
         $this->resetErrorBag();
 
@@ -150,17 +151,22 @@ class RoomAdd extends Component
             $room->is_available = $this->isAvailable ? 1 : 0; // if its true its available, set 1, otherwise, 0.
             $room->save();
 
-            if (!empty($this->selectedAmenities)) {
-                $room->amenities()->sync($validatedData['selectedAmenities']);
-            }
+            // dd([
+            //     'From $validatedData' => $validatedData['selectedAmenities'],
+            //     'From $this' => $this->selectedAmenities
+            // ]);
+            $room->amenities()->sync($validatedData['selectedAmenities']);
 
-            if ($this->paths) {
-                foreach ($this->paths as $path) {
+            if ($this->photos) {
+                //$flatPhotos = is_array($this->photos[0]) ? Arr::flatten($this->photos) : $this->photos;
+                foreach ($this->photos as $photo) {
+                    $photo = TemporaryUploadedFile::createFromLivewire($photo['tmpFilename']);
+                    //dump($photo);
                     $image = MediaManagementService::uploadMedia(
-                        $path,
+                        $photo,
                         '/rooms',
                         env('FILESYSTEM_DRIVER'),
-                        explode('.', $path->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $path->getClientOriginalExtension()
+                        explode('.', $photo->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $photo->getClientOriginalExtension()
                     );
                     $room->images()->create([
                         'path' => $image,

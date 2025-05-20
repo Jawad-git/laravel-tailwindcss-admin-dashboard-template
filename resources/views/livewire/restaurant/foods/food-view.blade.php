@@ -64,6 +64,8 @@
                                                     <x-orion.dashboard-th>{{ __('messages.Menu') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Price') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Creation Date') }}</x-orion.dashboard-th>
+                                                    <x-orion.dashboard-th>{{ __('messages.Action') }}</x-orion.dashboard-th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -72,6 +74,10 @@
                                                     <x-orion.dashboard-td>{{ $key + 1 }}</x-orion.dashboard-td>
                                                     <x-orion.dashboard-td>{{ $food->translations->first()->name }}</x-orion.dashboard-td>
                                                     <x-orion.dashboard-td>{{ $food->menu->translations->first()->name }}</x-orion.dashboard-td>
+                                                    <x-orion.dashboard-td>{{ $food->price }}</x-orion.dashboard-td>
+                                                    <x-orion.dashboard-td>{{ $food->created_at->format('Y-m-d') }}</x-orion.dashboard-td>
+
+
 
                                                     <td class="text-center">
                                                         @can('food-edit')

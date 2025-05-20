@@ -40,6 +40,9 @@
                                         {{__('messages.Name')}}
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        {{__('messages.Creation Date')}}
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         {{__('messages.Action')}}
                                     </th>
                                 </tr>
@@ -52,6 +55,9 @@
                                     </td>
                                     <td class="text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{ $r->name }}</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{ $r->created_at->format('Y-m-d') }}</p>
                                     </td>
                                     <td class="text-center">
                                         @if($r->id != 1)

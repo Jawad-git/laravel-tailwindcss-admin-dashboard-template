@@ -15,6 +15,10 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Services\MediaManagementService;
+
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+
 
 class FoodAdd extends Component
 {
@@ -28,6 +32,8 @@ class FoodAdd extends Component
 
     public $pages;
     public $language;
+    public $photos = [];
+
 
     protected function rules()
     {
@@ -97,6 +103,23 @@ class FoodAdd extends Component
                     'name' => $validatedData['name']['name_' . $value['code']],
                     'model_type' => Food::class,
                 ]);
+            }
+
+            if ($this->photos) {
+                //$flatPhotos = is_array($this->photos[0]) ? Arr::flatten($this->photos) : $this->photos;
+                foreach ($this->photos as $photo) {
+                    $photo = TemporaryUploadedFile::createFromLivewire($photo['tmpFilename']);
+                    //dump($photo);
+                    $image = MediaManagementService::uploadMedia(
+                        $photo,
+                        '/foods',
+                        env('FILESYSTEM_DRIVER'),
+                        explode('.', $photo->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $photo->getClientOriginalExtension()
+                    );
+                    $food->images()->create([
+                        'path' => $image,
+                    ]);
+                }
             }
             DB::commit();
 

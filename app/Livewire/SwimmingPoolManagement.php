@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Livewire\Restaurant;
+namespace App\Livewire;
 
+use App\Models\Availability;
 use App\Models\Language;
-use App\Models\Restaurant;
+use App\Models\SwimmingPool;
 use App\Models\Image;
 use Livewire\Attributes\On;
 use App\Models\Translation;
-use App\Models\Availability;
-use App\Services\WeekdayManagementService;
 use App\Services\LanguageManagementService;
 use App\Services\MediaManagementService;
-
+use App\Services\WeekdayManagementService;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
@@ -20,9 +19,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
-class RestaurantManagement extends Component
+class SwimmingPoolManagement extends Component
 {
-    public $restaurant;
+
+    public $swimmingpool;
     public $names;
     public $descriptions;
 
@@ -33,6 +33,8 @@ class RestaurantManagement extends Component
     public $endTimes;
 
     // scheduler-timer related variables
+
+
     public $languages;
 
     public $price;
@@ -89,7 +91,7 @@ class RestaurantManagement extends Component
     {
         foreach ($oldUploads as $oldUpload) {
             MediaManagementService::removeMedia($oldUpload['path']);
-            $this->restaurant->images()->where('id', $oldUpload['id'])->delete();
+            $this->swimmingpool->images()->where('id', $oldUpload['id'])->delete();
         }
     }
 
@@ -98,8 +100,8 @@ class RestaurantManagement extends Component
     public function toggleAvailability($weekdayName)
     {
         $this->activeDays[$weekdayName] = !$this->activeDays[$weekdayName];
-        $this->startTimes[$weekdayName] = '00:00';
-        $this->endTimes[$weekdayName] = '00:00';
+        $this->startTimes[$weekdayName] = null;
+        $this->endTimes[$weekdayName] = null;
     }
     // scheduler-timer related method
 
@@ -108,23 +110,25 @@ class RestaurantManagement extends Component
         $this->language = Language::where('code', app()->getLocale())->first()->id;
         $language = $this->language;
 
-        $this->restaurant = Restaurant::first();
-        if ($this->restaurant == null) {
-            dd($this->restaurant);
+        $this->swimmingpool = SwimmingPool::first();
+        if ($this->swimmingpool == null) {
+            dd($this->swimmingpool);
         }
 
         $this->languages = LanguageManagementService::getLanguages();
 
+
         foreach ($this->languages['data'] as $lang) {
-            $translation = Translation::where('model_id', $this->restaurant->id)
+            $translation = Translation::where('model_id', $this->swimmingpool->id)
                 ->where('language_id', $lang['id'])
-                ->where('model_type', Restaurant::class)
+                ->where('model_type', SwimmingPool::class)
                 ->first();
             $this->names["name_" . $lang['code']] = $translation ? $translation->name : '';
 
-            $translation = Translation::where('model_id', $this->restaurant->id)
+            // note: second query is useless? copying bug?
+            $translation = Translation::where('model_id', $this->swimmingpool->id)
                 ->where('language_id', $lang['id'])
-                ->where('model_type', Restaurant::class)
+                ->where('model_type', SwimmingPool::class)
                 ->first();
             $this->descriptions["description_" . $lang['code']] = $translation ? $translation->description : '';
         }
@@ -133,9 +137,9 @@ class RestaurantManagement extends Component
         $this->weekdays = WeekdayManagementService::getWeekdays()['data'];
 
         foreach ($this->weekdays as $weekday) {
-            $availability = Availability::where('model_id', $this->restaurant->id)
+            $availability = Availability::where('model_id', $this->swimmingpool->id)
                 ->where('weekday_id', $weekday['id'])
-                ->where('model_type', Restaurant::class)
+                ->where('model_type', SwimmingPool::class)
                 ->first();
 
             $this->startTimes[$weekday['name']] = $availability ? $availability->start_time : '';
@@ -144,7 +148,7 @@ class RestaurantManagement extends Component
         }
         // scheduler-timer related work
 
-        $images = $this->restaurant->images->map(function ($image) {
+        $images = $this->swimmingpool->images->map(function ($image) {
             return [
                 'id' => $image->id,
                 'path' => $image->path,
@@ -181,14 +185,14 @@ class RestaurantManagement extends Component
         DB::beginTransaction();
 
         try {
-            $restaurant = Restaurant::first();
-            $restaurant->save();
+            $swimmingpool = SwimmingPool::first();
+            $swimmingpool->save();
 
             foreach ($this->languages['data'] as $value) {
-                $restaurant->translations()->updateOrCreate(
+                $swimmingpool->translations()->updateOrCreate(
                     [
                         'language_id' => $value['id'],
-                        'model_type' => Restaurant::class,
+                        'model_type' => SwimmingPool::class,
                     ],
                     [
                         'name' => $validatedData['names']['name_' . $value['code']],
@@ -204,10 +208,10 @@ class RestaurantManagement extends Component
                     return;
                 }
 
-                $restaurant->availabilities()->updateOrCreate(
+                $swimmingpool->availabilities()->updateOrCreate(
                     [
                         'weekday_id' => $weekday['id'],
-                        'model_type' => Restaurant::class,
+                        'model_type' => SwimmingPool::class,
                     ],
                     [
                         'start_time' => $validatedData['startTimes'][$weekday['name']],
@@ -226,11 +230,11 @@ class RestaurantManagement extends Component
                     //dump($photo);
                     $image = MediaManagementService::uploadMedia(
                         $photo,
-                        '/restaurant',
+                        '/swimmingpool',
                         env('FILESYSTEM_DRIVER'),
                         explode('.', $photo->getClientOriginalName())[0] . '_' . time() . rand(0, 999999999999) . '.' . $photo->getClientOriginalExtension()
                     );
-                    $restaurant->images()->create([
+                    $swimmingpool->images()->create([
                         'path' => $image,
                     ]);
                 }
@@ -250,6 +254,6 @@ class RestaurantManagement extends Component
     }
     public function render()
     {
-        return view('livewire.restaurant.restaurant-management');
+        return view('livewire.swimming-pool-management');
     }
 }

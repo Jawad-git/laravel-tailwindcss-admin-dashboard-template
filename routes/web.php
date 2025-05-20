@@ -40,7 +40,7 @@ use App\Livewire\restaurant\RestaurantManagement;
 
 use App\Livewire\AboutUs;
 use App\Livewire\SocialMedia;
-use App\Livewire\SwimmingPool;
+use App\Livewire\SwimmingPoolManagement;
 
 
 use App\Livewire\auth\Register;
@@ -53,6 +53,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\CampaignController;
+use App\Livewire\AboutUsManagement;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -92,8 +93,8 @@ Route::get('sign-up', action: Register::class)->name('register');
 Route::get('restaurant', action: Login::class)->name('restaurant');
 
 
-Route::get('pool', action: SwimmingPool::class)->name('pool');
-Route::get('about-us', action: AboutUs::class)->name('about');
+Route::get('pool', action: SwimmingPoolManagement::class)->name('pool');
+Route::get('about-us', action: AboutUsManagement::class)->name('about');
 Route::get('social-media', action: SocialMedia::class)->name('socials');
 
 
