@@ -70,7 +70,7 @@
 
             <x-app.header :variant="$attributes['headerVariant']" />
 
-            <main class="grow">
+            <main class="grow" style="background-color: #f3f4f6 !important;">
                 {{ $slot }}
             </main>
 
@@ -78,7 +78,8 @@
 
     </div>
 
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src=" {{ asset('assets/js/jquery.min.js') }}">
+    </script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>

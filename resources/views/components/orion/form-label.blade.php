@@ -1,3 +1,5 @@
 @props(['inputkey'])
 
-<label for="{{ $inputkey }}" class="form-control-label">{{ $slot }}</label>
+<label {{ $attributes->merge(attributeDefaults: ['class' => 'form-control-label']) }} for="{{ $inputkey }}">
+    {{ $slot }}
+</label>

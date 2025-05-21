@@ -24,7 +24,7 @@ class AmenityView extends Component
 
     public function mount()
     {
-        //$this->authorize('amenity-list');
+        $this->authorize('amenity-list');
         $this->language = Language::where('code', app()->getLocale())->first()->id;
     }
 

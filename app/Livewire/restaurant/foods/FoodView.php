@@ -24,7 +24,7 @@ class FoodView extends Component
 
     public function mount()
     {
-        //$this->authorize('food-list');
+        $this->authorize('food-list');
         $this->language = Language::where('code', app()->getLocale())->first()->id;
     }
 

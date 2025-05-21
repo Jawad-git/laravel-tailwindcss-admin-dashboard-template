@@ -105,6 +105,7 @@ class RestaurantManagement extends Component
 
     public function mount()
     {
+        $this->authorize('restaurant-list');
         $this->language = Language::where('code', app()->getLocale())->first()->id;
         $language = $this->language;
 

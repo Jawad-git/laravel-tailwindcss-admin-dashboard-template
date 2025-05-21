@@ -29,8 +29,8 @@ class AmenityEdit extends Component
 
     public function mount($id)
     {
+        $this->authorize('amenity-edit');
         $this->amenity = Amenity::findOrFail($id);
-
         $this->languages = LanguageManagementService::getLanguages();
 
         foreach ($this->languages['data'] as $lang) {

@@ -26,14 +26,17 @@
                         </div>
                     </form>
                 </div>
+                {{--
+
                 <div class="card-footer text-start mt-2 pt-0 px-lg-2 px-1">
                     <p class="mb-2 text-sm mx-auto">
                         {{ __('auth.dont_have_an_account') }}
-                        <a href="{{ route('register') }}"
-                            class="text-primary underline text-blue-600 hover:text-blue-800 visited:text-purple-600">{{ __('auth.sign_up') }}</a>
-                    </p>
-                </div>
+                <a href="{{ route('register') }}"
+                    class="text-primary underline text-blue-600 hover:text-blue-800 visited:text-purple-600">{{ __('auth.sign_up') }}</a>
+                </p>
             </div>
+            --}}
         </div>
     </div>
+</div>
 </div>

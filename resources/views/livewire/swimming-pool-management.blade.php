@@ -26,13 +26,7 @@
         @endif
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
-                {{ __('messages.Create Food') }}
-                <span class="float-right mt-3">
-                    <span class="d-flex align-items-center">
-                        <a class="btn bg-gradient-primary"
-                            href="{{ route('foods') }}">{{ __('messages.Foods') }}</a>
-                    </span>
-                </span>
+                {{ __('messages.Manage The Swimming Pool') }}
             </div>
             <div class="card-body">
                 <form wire:submit.prevent="update">
@@ -82,11 +76,12 @@
                             </div>
                         </div>
                     </div>
+                    @can('pool-edit')
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn bg-gradient-dark btn-md mt-4 mb-4">
                             {{ __('messages.Save') }}</button>
                     </div>
-
+                    @endcan
                 </form>
             </div>
         </div>

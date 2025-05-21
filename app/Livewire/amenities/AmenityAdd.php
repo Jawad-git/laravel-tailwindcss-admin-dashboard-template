@@ -31,7 +31,7 @@ class AmenityAdd extends Component
 
     public function mount()
     {
-        // $this->authorize('amenity-create');
+        $this->authorize('amenity-create');
         $this->languages = LanguageManagementService::getLanguages();
         foreach ($this->languages['data'] as $lang) {
             $this->name["name_" . $lang['code']] = '';

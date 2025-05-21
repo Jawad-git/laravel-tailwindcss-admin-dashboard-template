@@ -24,7 +24,7 @@ class MenuView extends Component
 
     public function mount()
     {
-        //$this->authorize('menu-list');
+        $this->authorize('cuisine-list');
         $this->language = Language::where('code', app()->getLocale())->first()->id;
     }
 

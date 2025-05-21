@@ -84,7 +84,7 @@
 
             <x-app.header :variant="$attributes['headerVariant']" />
 
-            <main class="grow">
+            <main class="grow"">
                 {{ $slot }}
             </main>
 

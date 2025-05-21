@@ -77,6 +77,7 @@ class FoodEdit extends Component
 
     public function mount($id)
     {
+        $this->authorize('food-edit');
         $this->language = Language::where('code', app()->getLocale())->first()->id;
         $language = $this->language;
 

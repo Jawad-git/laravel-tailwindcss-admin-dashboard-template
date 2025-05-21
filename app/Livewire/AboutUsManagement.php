@@ -74,6 +74,7 @@ class AboutUsManagement extends Component
 
     public function mount()
     {
+        $this->authorize('about-list');
         $this->language = Language::where('code', app()->getLocale())->first()->id;
         $language = $this->language;
 

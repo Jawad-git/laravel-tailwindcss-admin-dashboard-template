@@ -29,6 +29,8 @@ class MenuEdit extends Component
 
     public function mount($id)
     {
+        $this->authorize('cuisine-edit');
+
         $this->menu = Menu::findOrFail($id);
 
         $this->languages = LanguageManagementService::getLanguages();

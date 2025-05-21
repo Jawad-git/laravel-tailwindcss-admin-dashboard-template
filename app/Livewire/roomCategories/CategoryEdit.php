@@ -29,6 +29,8 @@ class CategoryEdit extends Component
 
     public function mount($id)
     {
+        $this->authorize('category-edit');
+
         $this->category = RoomCategory::findOrFail($id);
 
         $this->languages = LanguageManagementService::getLanguages();

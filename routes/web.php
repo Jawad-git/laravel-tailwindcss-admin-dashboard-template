@@ -39,7 +39,7 @@ use App\Livewire\RestaurantEdit;
 use App\Livewire\restaurant\RestaurantManagement;
 
 use App\Livewire\AboutUs;
-use App\Livewire\SocialMedia;
+use App\Livewire\SocialMediaManagement;
 use App\Livewire\SwimmingPoolManagement;
 
 
@@ -81,9 +81,6 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/dashboard', action: Dashboard::class)->name('dashboard');
-Route::get('/dashboard/analytics', function () {
-    Log::info('Analytics page loaded');
-})->name('analytics');
 Route::get('/dashboard/fintech', function () {
     Log::info('fintech page loaded');
 })->name('fintech');
@@ -95,7 +92,7 @@ Route::get('restaurant', action: Login::class)->name('restaurant');
 
 Route::get('pool', action: SwimmingPoolManagement::class)->name('pool');
 Route::get('about-us', action: AboutUsManagement::class)->name('about');
-Route::get('social-media', action: SocialMedia::class)->name('socials');
+Route::get('social-media', action: SocialMediaManagement::class)->name('socials');
 
 
 

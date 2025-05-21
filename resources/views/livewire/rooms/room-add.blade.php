@@ -71,7 +71,7 @@
                         <div class="col-md-4 ">
                             <div class="form-group mt-4">
                                 <x-orion.form-label inputkey="capacity">
-                                    {{ __('messages.Capacity') }}
+                                    {{ __('messages.Room Capacity') }}
                                 </x-orion.form-label>
                                 <x-orion.form-input inputkey="capacity" />
                                 <x-orion.form-error inputkey="capacity" />
@@ -151,7 +151,7 @@
                             <div class="form-check form-switch h-100 w-100 d-flex justify-content-center">
                                 <div class="gap-1 mt-6">
 
-                                    <label for="isAvailableRoomAdd">Available?</label>
+                                    <label for="isAvailableRoomAdd">{{__("messages.Available?")}}</label>
                                     <input class="form-check-input "
                                         id="isAvailableRoomAdd"
                                         {{ $isAvailable ? 'checked' : '' }}

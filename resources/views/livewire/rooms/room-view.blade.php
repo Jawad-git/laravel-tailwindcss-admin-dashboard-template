@@ -60,7 +60,7 @@
                                             <thead>
                                                 <tr>
                                                     <x-orion.dashboard-th>#</x-orion.dashboard-th>
-                                                    <x-orion.dashboard-th>{{ __('messages.Number') }}</x-orion.dashboard-th>
+                                                    <x-orion.dashboard-th>{{ __('messages.Room Number') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Category') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Floor') }}</x-orion.dashboard-th>
                                                     <x-orion.dashboard-th>{{ __('messages.Available') }}</x-orion.dashboard-th>

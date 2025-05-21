@@ -96,7 +96,7 @@ class RoomAdd extends Component
 
     public function mount()
     {
-        //$this->authorize('room-create');
+        $this->authorize('room-create');
         $this->languages = LanguageManagementService::getLanguages();
         foreach ($this->languages['data'] as $lang) {
             $this->statuses["status_" . $lang['code']] = '';

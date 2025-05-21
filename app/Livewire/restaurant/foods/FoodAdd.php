@@ -49,7 +49,7 @@ class FoodAdd extends Component
     {
         $this->language = Language::where('code', app()->getLocale())->first()->id;
         $language = $this->language;
-        // $this->authorize('roomFood-create');
+        $this->authorize('food-create');
         $this->languages = LanguageManagementService::getLanguages();
         foreach ($this->languages['data'] as $lang) {
             $this->name["name_" . $lang['code']] = '';

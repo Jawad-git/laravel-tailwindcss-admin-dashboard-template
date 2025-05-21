@@ -153,7 +153,7 @@ class RoomEdit extends Component
 
     public function mount($id)
     {
-        // this->authorize room-edit/update whatever
+        $this->authorize('room-edit');
         $this->room = Room::findOrFail($id);
 
         $this->languages = LanguageManagementService::getLanguages();

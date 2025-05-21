@@ -31,7 +31,7 @@
                     @endif
 
                     <div class=" ms-3 my-3 text-start">
-                        @can('menu-create')
+                        @can('cuisine-create')
                         <a class="btn bg-gradient-dark mb-0" href="{{ route('menu-create') }}">
                             <i class="material-icons text-sm">add</i> {{ __('messages.Add New Menu') }}
                         </a>
@@ -95,7 +95,7 @@
                                                             class="text-secondary text-xs font-weight-bold">{{ $menu->created_at->format('Y-m-d') }}</span>
                                                     </td>
                                                     <td class="text-center">
-                                                        @can('menu-edit')
+                                                        @can('cuisine-edit')
                                                         <a rel="tooltip" class="btn btn-success btn-link"
                                                             href="{{ route('menu-edit', $menu->id) }}"
                                                             data-original-title="" title="">
@@ -103,7 +103,7 @@
                                                             <div class="ripple-container"></div>
                                                         </a>
                                                         @endcan
-                                                        @can('menu-delete')
+                                                        @can('cuisine-delete')
                                                         <button type="button" class="btn btn-danger btn-link"
                                                             data-original-title="" title=""
                                                             onclick="confirmDelete({{ $menu->id }})">
