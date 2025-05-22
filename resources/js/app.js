@@ -5,7 +5,7 @@
 import './bootstrap';
 
 
-
+// Import Chart.js
 import { Chart } from 'chart.js';
 
 // Import flatpickr
