@@ -71,9 +71,7 @@ use Illuminate\Support\Facades\Session;
 
 Route::get('/', Login::class)->name('login');
 
-//Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
-// Route for the getting the data feed
 Route::get('/json-data-feed', [DataFeedController::class, 'getDataFeed'])->name('json_data_feed');
 
 Route::get('/', function () {
