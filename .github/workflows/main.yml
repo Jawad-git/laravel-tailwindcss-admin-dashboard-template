@@ -1,4 +1,4 @@
-name: Publish Website to CPanel
+name: Publish Laravel Website to cPanel
 
 on:
   push:
@@ -6,29 +6,47 @@ on:
       - main
 
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  deploy:
+    name: FTP Deploy to cPanel
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout code
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
+      # Set up Node.js (for Vite)
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      # Set up PHP (for Composer)
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, bcmath, intl, pdo, curl, openssl
+
+      # Install frontend dependencies
+      - name: Install NPM dependencies
         run: npm install
 
-      - name: Build project
-        run: npm run build # Make sure this creates a 'dist' or 'build' folder
+      # Build Vite assets
+      - name: Build assets with Vite
+        run: npm run build
 
+      # Install backend dependencies
+      - name: Install Composer dependencies (without dev)
+        run: composer install --no-dev --optimize-autoloader
+
+      # FTP Deploy
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./  # Upload everything in repo root
+          server-dir: /public_html/  # Change based on your cPanel structure
