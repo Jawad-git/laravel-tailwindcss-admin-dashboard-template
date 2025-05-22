@@ -76,7 +76,7 @@ Route::get('/', Login::class)->name('login');
 // Route for the getting the data feed
 Route::get('/json-data-feed', [DataFeedController::class, 'getDataFeed'])->name('json_data_feed');
 
-Route::get('/login', function () {
+Route::get('/', function () {
     return redirect('sign-in');
 })->name('login');
 
