@@ -107,7 +107,7 @@ class SwimmingPoolManagement extends Component
 
     public function mount()
     {
-        dump('hello');
+        // dump('hello');
         $this->authorize('pool-list');
         $this->language = Language::where('code', app()->getLocale())->first()->id;
         $language = $this->language;
