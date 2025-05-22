@@ -123,7 +123,7 @@ class SocialMediaManagement extends Component
 
             DB::commit();
 
-            return redirect()->route('socials')->with('success', __('messages.section updated successfully'));
+            return redirect()->route('social')->with('success', __('messages.section updated successfully'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();

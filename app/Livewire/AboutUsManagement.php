@@ -42,7 +42,6 @@ class AboutUsManagement extends Component
     protected function rules()
     {
         $rules = [
-            'names.*' => 'required|string',
             'descriptions.*' => 'required|string',
         ];
         return $rules;
@@ -146,7 +145,6 @@ class AboutUsManagement extends Component
                         'model_type' => AboutUs::class,
                     ],
                     [
-                        'name' => $validatedData['names']['name_' . $value['code']],
                         'description' => $validatedData['descriptions']['description_' . $value['code']],
                     ]
                 );
@@ -174,7 +172,7 @@ class AboutUsManagement extends Component
 
             DB::commit();
 
-            return redirect()->route('foods')->with('success', __('messages.section updated successfully'));
+            return redirect()->route('about')->with('success', __('messages.section updated successfully'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();

@@ -107,6 +107,7 @@ class SwimmingPoolManagement extends Component
 
     public function mount()
     {
+        dump('hello');
         $this->authorize('pool-list');
         $this->language = Language::where('code', app()->getLocale())->first()->id;
         $language = $this->language;
@@ -246,7 +247,7 @@ class SwimmingPoolManagement extends Component
 
             DB::commit();
 
-            return redirect()->route('foods')->with('success', __('messages.section updated successfully'));
+            return redirect()->route('pool')->with('success', __('messages.section updated successfully'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();

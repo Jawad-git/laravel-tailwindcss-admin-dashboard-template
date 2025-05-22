@@ -242,7 +242,7 @@ class RestaurantManagement extends Component
 
             DB::commit();
 
-            return redirect()->route('foods')->with('success', __('messages.section updated successfully'));
+            return redirect()->route('restaurant')->with('success', __('messages.section updated successfully'));
         } catch (\Exception $e) {
             dd($e);
             DB::rollBack();

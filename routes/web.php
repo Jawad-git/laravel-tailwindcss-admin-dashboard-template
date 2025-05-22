@@ -69,7 +69,7 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
-//Route::redirect(uri: '/', 'login');
+Route::get('/', Login::class)->name('login');
 
 //Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 

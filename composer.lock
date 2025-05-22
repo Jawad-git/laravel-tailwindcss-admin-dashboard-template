@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b952e2de39a381ece21e58a64e9f5d86",
+    "content-hash": "e70cfad4427b6a3a12b74cc0c08841f8",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -241,16 +241,16 @@
         },
         {
             "name": "dasundev/livewire-dropzone",
-            "version": "v2.0.4",
+            "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dasundev/livewire-dropzone.git",
-                "reference": "bc7707a2ce4ec3d1eea7189fb907402735b75eaa"
+                "url": "https://github.com/Jawad-git/livewire-dropzone.git",
+                "reference": "8a6cca8d5f2d024715d395890bf5c489aed59b57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dasundev/livewire-dropzone/zipball/bc7707a2ce4ec3d1eea7189fb907402735b75eaa",
-                "reference": "bc7707a2ce4ec3d1eea7189fb907402735b75eaa",
+                "url": "https://api.github.com/repos/Jawad-git/livewire-dropzone/zipball/8a6cca8d5f2d024715d395890bf5c489aed59b57",
+                "reference": "8a6cca8d5f2d024715d395890bf5c489aed59b57",
                 "shasum": ""
             },
             "require": {
@@ -264,15 +264,16 @@
                 "orchestra/testbench": "^8.23",
                 "pestphp/pest": "^1.23"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "aliases": {
-                        "LivewireDropzone": "Dasundev\\LivewireDropzone\\LivewireDropzoneFacade"
-                    },
                     "providers": [
                         "Dasundev\\LivewireDropzone\\LivewireDropzoneServiceProvider"
-                    ]
+                    ],
+                    "aliases": {
+                        "LivewireDropzone": "Dasundev\\LivewireDropzone\\LivewireDropzoneFacade"
+                    }
                 }
             },
             "autoload": {
@@ -280,7 +281,41 @@
                     "Dasundev\\LivewireDropzone\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Dasundev\\LivewireDropzone\\Tests\\": "tests",
+                    "Workbench\\App\\": "workbench/app/"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@clear",
+                    "@prepare"
+                ],
+                "test": [
+                    "./vendor/bin/pest"
+                ],
+                "lint": [
+                    "./vendor/bin/pint --dirty"
+                ],
+                "analyse": [
+                    "./vendor/bin/phpstan analyse"
+                ],
+                "clear": [
+                    "@php vendor/bin/testbench package:purge-skeleton --ansi"
+                ],
+                "prepare": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ],
+                "build": [
+                    "@php vendor/bin/testbench workbench:build --ansi"
+                ],
+                "serve": [
+                    "Composer\\Config::disableProcessTimeout",
+                    "@build",
+                    "@php vendor/bin/testbench serve"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -297,16 +332,15 @@
                 "livewire"
             ],
             "support": {
-                "issues": "https://github.com/dasundev/livewire-dropzone/issues",
-                "source": "https://github.com/dasundev/livewire-dropzone/tree/v2.0.4"
+                "source": "https://github.com/Jawad-git/livewire-dropzone/tree/main"
             },
             "funding": [
                 {
-                    "url": "https://github.com/dasundev",
-                    "type": "github"
+                    "type": "github",
+                    "url": "https://github.com/dasundev"
                 }
             ],
-            "time": "2025-02-22T09:39:29+00:00"
+            "time": "2025-05-22T12:00:39+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -9221,7 +9255,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "dasundev/livewire-dropzone": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
