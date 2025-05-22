@@ -11,42 +11,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
+      # ✅ Step 1: Checkout the repository
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
-      # Set up Node.js (for Vite)
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      # Set up PHP (for Composer)
+      # ✅ Step 2: Set up PHP
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: mbstring, bcmath, intl, pdo, curl, openssl
 
-      # Install frontend dependencies
+      # ✅ Step 3: Install Composer dependencies (including Livewire)
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      # ✅ Step 4: Set up Node.js for Vite
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # ✅ Step 5: Install Node dependencies and build frontend assets
       - name: Install NPM dependencies
         run: npm install
 
-      # Build Vite assets
       - name: Build assets with Vite
         run: npm run build
 
-      # Install backend dependencies
-      - name: Install Composer dependencies (without dev)
-        run: composer install --no-dev --optimize-autoloader
-
-      # FTP Deploy
-      - name: FTP-Deploy-Action
+      # ✅ Step 6: Deploy to cPanel via FTP
+      - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./  # Upload everything in repo root
-          server-dir: /public_html/  # Change based on your cPanel structure
+
