@@ -104,7 +104,8 @@
                                         <td class="ps-4 w-50">
                                             <div class="form-check">
                                                 <input wire:model="selectedPermission.{{ $v['id'] }}"
-                                                    class="form-check-input" type="checkbox" value=""
+                                                wire:click="togglePermission({{ $v['id'] }}, $event.target.checked)"
+                                                class="form-check-input" type="checkbox" value=""
                                                     id="{{ $v['id'] }}">
                                                 <label class="form-check-label role-check-label"
                                                     for="selectedPermission.{{ $v['name'] }}">

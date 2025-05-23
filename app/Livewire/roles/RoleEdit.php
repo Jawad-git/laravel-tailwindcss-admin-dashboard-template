@@ -23,6 +23,8 @@ class RoleEdit extends Component
     public $notBooted = true;
     public $groupSelectAll = [];
 
+    // the variables have their structures described in the RoleAdd.php file,
+    // refer to it for any issues.
     public $selectedPermission = [];
     public $filteredPermissions = [];
     public $allpermissions = [];
@@ -89,9 +91,16 @@ class RoleEdit extends Component
 
             if ((count($tempobj) > 0 && array_keys($tempobj)[count($tempobj) - 1] != $permHead) || $key == 0) {
                 $tempobj[$permHead] = [];
+
+                // to prevent select all from being checked when checking only 1 group on launch
+                $this->groupSelectAll[$permHead] = false;
+                $this->selectAll = false;
             }
             $p->permissionSubName = $permissionName[1];
             array_push($tempobj[$permHead], $p);
+
+            // to prevent select all from being checked when checking only 1 group on launch
+            $this->selectedPermission[$p->id] = false;
         }
 
         $this->filteredPermissions = $tempobj;
@@ -125,12 +134,30 @@ class RoleEdit extends Component
                 }
             }
         } else {
-            $this->selectedPermission = [];
             foreach ($this->filteredPermissions as $groupName => $permissions) {
                 $this->groupSelectAll[$groupName] = false;
+                foreach ($permissions as $permission) {
+                    $this->selectedPermission[$permission->id] = false;
+                }
             }
         }
     }
+
+    public function togglePermission($permissionId, $isChecked)
+    {
+        $this->selectedPermission[$permissionId] = $isChecked;
+        $permission = Permission::findOrFail($permissionId);
+        $permissionName = explode("-", $permission->name);
+        $permHead = $permissionName[0];
+        
+        // Update group select all state depending on the permission checked
+        if (!$isChecked) {
+            $this->unselectGroupPermissionOnUnselectSubCheckbox($permHead);
+        }else{
+            $this->selectGroupPermissionOnselectSubCheckbox($permHead);
+        }
+    }
+
 
     public function selectGroupPermissions($groupName)
     {
@@ -148,6 +175,17 @@ class RoleEdit extends Component
         $this->selectAll = collect($this->groupSelectAll)->every(function ($value) {
             return $value === true;
         });
+    }
+
+    public function unselectGroupPermissionOnUnselectSubCheckbox($permHead)
+    {
+        $this->groupSelectAll[$permHead] = false;
+        $this->selectAll = false;
+    }
+
+    public function selectGroupPermissionOnselectSubCheckbox($permHead)
+    {
+        $this->updateGroupSelectAll();
     }
 
     public function updateGroupSelectAll()

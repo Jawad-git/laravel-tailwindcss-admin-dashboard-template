@@ -189,7 +189,6 @@ class RoomEdit extends Component
             }
             $file['temporaryUrl'] = Storage::url($path); // gives you /storage/uploads/example.pdf
             $this->oldDocs[] = $file;
-            dump($this->oldDocs);
         }
 
         $this->selectedCategory = $this->room->room_category_id;
@@ -264,7 +263,6 @@ class RoomEdit extends Component
                 //$flatPhotos = is_array($this->photos[0]) ? Arr::flatten($this->photos) : $this->photos;
                 foreach ($this->photos as $photo) {
                     $photo = TemporaryUploadedFile::createFromLivewire($photo['tmpFilename']);
-                    //dump($photo);
                     $image = MediaManagementService::uploadMedia(
                         $photo,
                         '/rooms',

@@ -18,10 +18,17 @@ class RoleAdd extends Component
 
     public $selectAll = false;
     public $notBooted = true;
-    public $groupSelectAll = []; // Group select all tracking
+    // Group select all tracking, associative array (key => boolean), group name => boolean for status
+    public $groupSelectAll = [];
 
+    // Selected permissions, associative array (key => boolean), permission id => boolean for status
     public $selectedPermission = [];
+
+    // filtered permissions, associative array (key => array), group name => associated permissions array (each array entry is the full object)
     public $filteredPermissions = [];
+
+    // all permissions, array of strings
+    // not used anywhere by the looks of it
     public $allpermissions = [];
 
     protected $rules = [
@@ -84,9 +91,16 @@ class RoleAdd extends Component
             // Initialize group if it doesn't exist
             if (!isset($tempobj[$permHead])) {
                 $tempobj[$permHead] = [];
+
+                // to prevent select all from being checked when checking only 1 group on launch
+                $this->groupSelectAll[$permHead] = false;
+                $this->selectAll = false;
             }
 
             $tempobj[$permHead][] = $p;
+
+            // to prevent select all from being checked when checking only 1 group on launch
+            $this->selectedPermission[$p->id] = false;
         }
 
         $this->filteredPermissions = $tempobj;
@@ -101,6 +115,20 @@ class RoleAdd extends Component
     {
         $this->loadPermissions();
     }
+    public function togglePermission($permissionId, $isChecked)
+    {
+        $this->selectedPermission[$permissionId] = $isChecked;
+        $permission = Permission::findOrFail($permissionId);
+        $permissionName = explode("-", $permission->name);
+        $permHead = $permissionName[0];
+        
+        // Update group select all state depending on the permission checked
+        if (!$isChecked) {
+            $this->unselectGroupPermissionOnUnselectSubCheckbox($permHead);
+        }else{
+            $this->selectGroupPermissionOnselectSubCheckbox($permHead);
+        }
+    }
 
     public function selectAllPermissions()
     {
@@ -112,9 +140,11 @@ class RoleAdd extends Component
                 }
             }
         } else {
-            $this->selectedPermission = [];
             foreach ($this->filteredPermissions as $groupName => $permissions) {
                 $this->groupSelectAll[$groupName] = false;
+                foreach ($permissions as $permission) {
+                    $this->selectedPermission[$permission->id] = false;
+                }
             }
         }
     }
@@ -130,6 +160,34 @@ class RoleAdd extends Component
         $this->selectAll = collect($this->groupSelectAll)->every(function ($value) {
             return $value === true;
         });
+    }
+
+    public function updateSelectAll()
+    {
+        $this->selectAll = collect($this->groupSelectAll)->every(function ($value) {
+            return $value === true;
+        });
+    }
+
+    public function updateGroupSelectAll()
+    {
+        foreach ($this->filteredPermissions as $groupName => $permissions) {
+            $this->groupSelectAll[$groupName] = collect($permissions)->every(function ($permission) {
+                return isset($this->selectedPermission[$permission->id]) && $this->selectedPermission[$permission->id];
+            });
+        }
+        $this->updateSelectAll();
+    }
+
+    public function unselectGroupPermissionOnUnselectSubCheckbox($permHead)
+    {
+        $this->groupSelectAll[$permHead] = false;
+        $this->selectAll = false;
+    }
+
+    public function selectGroupPermissionOnselectSubCheckbox($permHead)
+    {
+        $this->updateGroupSelectAll();
     }
 
     public function store()
