@@ -29,42 +29,5 @@ class CreateAdminUserSeeder extends Seeder
         $roleSuperAdmin->syncPermissions($permissions);
 
         $userSuperAdmin->assignRole($roleSuperAdmin);
-        $roleOrganization = Role::FirstOrCreate(['name' => 'Organization']);
-        $roleKarbalaHotel = Role::FirstOrCreate(['name' => 'Karbala Hotel', 'guard_name' => 'web']);
-
-        $permissionsKarbalaHotel = Permission::whereIn('name', [
-            'admin-list',
-            'admin-create',
-            'admin-edit',
-            'admin-delete',
-            'admin-profile',
-
-
-            'role-list',
-            'role-create',
-            'role-edit',
-            'role-delete',
-
-            // what to add  for staff.... tomorrow
-        ])->get();
-        $roleKarbalaHotel->syncPermissions($permissionsKarbalaHotel);
-
-        $permissionsOrganization = Permission::whereIn('name', [
-            'admin-list',
-            'admin-create',
-            'admin-edit',
-            'admin-delete',
-            'admin-profile',
-
-
-            'role-list',
-            'role-create',
-            'role-edit',
-            'role-delete',
-
-            // what to add  for organization.... tomorrow
-
-        ])->get();
-        $roleOrganization->syncPermissions($permissionsOrganization);
     }
 }
