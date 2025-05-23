@@ -28,7 +28,7 @@
                 <!-- Search Button with Modal -->
                 <x-modal-search />
 
-                <x-dropdown-languages align="right" />
+                <x-dropdown-languages />
 
                 <!-- Divider -->
                 <hr class="w-6px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
